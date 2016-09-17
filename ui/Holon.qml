@@ -2,7 +2,7 @@ import QtQuick 2.4
 
 Rectangle {
     id: holon
-    property double size: parent_size * source.s * 0.8
+    property double size: parent_size * source.s
     property var source
     property var parent_size: parent.height < parent.width ? parent.height : parent.width
     width: size
@@ -28,9 +28,8 @@ Rectangle {
         clip: true
     }
 
-
     function calc_screen_coord(logical_coord) {
-        return holon.parent_size/2 + holon.parent_size/2.3 * logical_coord;
+        return (holon.parent_size/2)*logical_coord + holon.parent_size/2 - size/2; // don't need -size/2 if anchor point is center
     }
 
 }
