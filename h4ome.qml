@@ -6,7 +6,7 @@ import 'services/'
 import 'ui/'
 
 ApplicationWindow {
-    title: qsTr("Hello World")
+    title: qsTr("H4OME")
     width: 640
     height: 480
 
