@@ -33,7 +33,7 @@ Rectangle {
             }
         }
 
-        var component = Qt.createComponent("Holon.qml");
+        var component = Qt.createComponent("qrc:/ui/Holon.qml");
         while(component.status !== Component.Ready) ;
 
         clearHolons();

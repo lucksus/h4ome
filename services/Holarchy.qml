@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import 'src/request.js' as HTTP
+import 'qrc:/js/request.js' as HTTP
 
 Item {
     id: holarchy

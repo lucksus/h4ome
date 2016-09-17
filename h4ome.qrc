@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>h4ome.qml</file>
+        <file>ui/Holon.qml</file>
+        <file>ui/NoomapInterface.qml</file>
+        <file>js/color_from_type.js</file>
+        <file>js/request.js</file>
+        <file>services/Holarchy.qml</file>
+    </qresource>
+</RCC>
