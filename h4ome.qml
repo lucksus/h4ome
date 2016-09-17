@@ -7,8 +7,9 @@ import 'ui/'
 
 ApplicationWindow {
     title: qsTr("H4OME")
-    width: 640
-    height: 480
+    visible: true
+    width: (Qt.platform.os == "linux" || Qt.platform.os == "osx" ) ? 640 : undefined
+    height: (Qt.platform.os == "linux" || Qt.platform.os == "osx" ) ? 480 : undefined
 
     menuBar: MenuBar {
         Menu {
