@@ -26,10 +26,12 @@ Rectangle {
 
         var color_from_type = function(type) {
             switch(type){
-            case 'v': return 'blue';
+            case 'v': return 'purple';
             case 'i': return 'yellow';
             case 's': return 'orange';
             case 'p': return 'green';
+            case 'd': return 'pink';
+
             }
         }
 
