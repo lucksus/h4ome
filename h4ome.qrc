@@ -6,5 +6,8 @@
         <file>js/color_from_type.js</file>
         <file>js/request.js</file>
         <file>services/Holarchy.qml</file>
+        <file>images/drawer.png</file>
+        <file>src/main.cpp</file>
+        <file>images/menu.png</file>
     </qresource>
 </RCC>
