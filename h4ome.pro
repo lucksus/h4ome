@@ -9,7 +9,7 @@ SOURCES += src/main.cpp
 OTHER_FILES += h4ome.qml \
                 ui/*.qml \
                 services/*.qml \
-                src/*.js
+                js/*.js
 
 RESOURCES += h4ome.qrc
 
