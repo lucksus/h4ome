@@ -1,26 +1,26 @@
-#%RAML 1.0
+#%RAML 0.8
 title: Holonic Map Server
 version: v1
 baseUri: https://hms-mock.united-earth.vision/{version}
 
 securitySchemes:
-  validUserSession:
-    description: Some requests require authentication.
-    type: x-holonic_map_server-private
-    describedBy:
-      headers:
-        JWT:
-          description: JSON Web Token (https://jwt.io/). The token that identifies a valid user session. Get it by doing a POST to /session with valid credentials.
-          type: string
-          required: true
-      responses:
-        401:
-          body:
-            application/json:
-              example: |
-                {
-                  "status": "Unauthorized"
-                }
+  - validUserSession:
+      description: Some requests require authentication.
+      type: x-holonic_map_server-private
+      describedBy:
+        headers:
+          JWT:
+            description: JSON Web Token (https://jwt.io/). The token that identifies a valid user session. Get it by doing a POST to /session with valid credentials.
+            type: string
+            required: true
+        responses:
+          401:
+            body:
+              application/json:
+                example: |
+                  {
+                    "status": "Unauthorized"
+                  }
 
 /session:
   post:
@@ -120,14 +120,14 @@ securitySchemes:
           body:
             application/json:
               example: |
-                {
+                '{
                   "_name": "Hello Holon",
                   "_global_path": "/home/lucksus/hello_function",
                   "_id": "Qx3dasdf333Ad4t",
                   "_lang": "ES6",
                   "_function": |
                     _holon.setTitle("Hello World!")
-                }
+                }'
     put:
       description: |
         Sets/updates the H4OME name registrar for the given pathname
@@ -144,11 +144,11 @@ securitySchemes:
         200:
           body:
             application/json:
-              example: { "_status": "ok" }
+              example: '{ "_status": "ok" }'
         401:
           body:
             application/json:
-              example: { "_status": "not allowed" }
+              example: '{ "_status": "not allowed" }'
 
 
 
@@ -163,11 +163,11 @@ securitySchemes:
       200:
         body:
           application/json:
-            example: { "_status": "ok" }
+            example: '{ "_status": "ok" }'
       404:
         body:
           application/json:
-            example: { "_status": "illformatted holon" }
+            example: '{ "_status": "illformatted holon" }'
 
   /{address}:
     get:
