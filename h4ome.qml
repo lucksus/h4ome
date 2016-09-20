@@ -5,7 +5,6 @@ import QtQuick.Controls.Material 2.0
 import QtQuick.Controls.Universal 2.0
 import Qt.labs.settings 1.0
 
-import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import 'services/'
 import 'ui/'
@@ -13,10 +12,14 @@ import 'ui/'
 
 
 ApplicationWindow {
+    id: window
     title: qsTr("H4OME")
     visible: true
-    width: (Qt.platform.os == "linux" || Qt.platform.os == "osx" ) ? 640 : undefined
-    height: (Qt.platform.os == "linux" || Qt.platform.os == "osx" ) ? 480 : undefined
+
+    Settings {
+        id: settings
+        property string style: "Universal"
+    }
 
     header: ToolBar {
         Material.foreground: "white"
@@ -24,6 +27,7 @@ ApplicationWindow {
         RowLayout {
             spacing: 20
             anchors.fill: parent
+
 
             ToolButton {
                 contentItem: Image {
@@ -74,8 +78,8 @@ ApplicationWindow {
 
     Drawer {
         id: drawer
-        width: Math.min(parent.width, parent.height) / 2.5
-        height: parent.height
+        width: Math.min(window.width, window.height) / 2
+        height: window.height
 
         ListView {
             id: listView
@@ -105,12 +109,33 @@ ApplicationWindow {
         }
     }
 
-    MessageDialog {
+    Popup {
         id: messageDialog
-        title: qsTr("May I have your attention, please?")
+        modal: true
+        focus: true
+        x: (window.width - width) / 2
+        y: window.height / 6
+        width: Math.min(window.width, window.height) / 3 * 2
+
+        Column {
+            id: messageDialogColumn
+            spacing: 20
+
+            Label {
+                text: "Holon data received!"
+                font.bold: true
+            }
+
+            Label {
+                id: popupLabel
+                width: messageDialog.availableWidth
+                wrapMode: Label.Wrap
+                font.pixelSize: 12
+            }
+        }
 
         function show(holarchy) {
-            messageDialog.text = 'Got ' + holarchy.holons.length + ' holons and ' +
+            popupLabel.text = 'Got ' + holarchy.holons.length + ' holons and ' +
                     holarchy.links.length + ' links!';
             messageDialog.open();
         }
