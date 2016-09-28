@@ -1,4 +1,6 @@
 import QtQuick 2.6
+import QtQuick 2.0
+
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
@@ -10,10 +12,13 @@ import 'services/'
 import 'ui/'
 
 
+import QtCanvas3D 1.0
+import "noomap.js" as GLCode
+
 
 ApplicationWindow {
     id: window
-    title: qsTr("H4OME")
+    title: qsTr("H⁴OME")
     visible: true
 
     Settings {
@@ -153,6 +158,36 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
-        holarchy.loadHolon('me.lucksus')
+        holarchy.loadHolon('me.lucksus');
+        holarchy.loaded.connect(holarchyUpdate);
     }
+
+    function holarchyUpdate() {
+        GLCode.holarchyUpdate(holarchy);
+    }
+
+    Canvas3D {
+        id: canvas3d
+        anchors.fill: parent
+
+        onInitializeGL: {
+            GLCode.initializeGL(canvas3d, eventSource, window);
+        }
+        onPaintGL: {
+            GLCode.paintGL(canvas3d);
+            //fpsDisplay.fps = canvas3d.fps;
+        }
+
+        onResizeGL: {
+            GLCode.onResizeGL(canvas3d);
+        }
+
+        ControlEventSource {
+            anchors.fill: parent
+            focus: true
+            id: eventSource
+        }
+
+    }
+
 }

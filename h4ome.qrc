@@ -9,5 +9,21 @@
         <file>images/drawer.png</file>
         <file>src/main.cpp</file>
         <file>images/menu.png</file>
+        <file>noomap.js</file>
+        <file>ControlEventSource.qml</file>
+        <file>three.js</file>
+        <file>images/sprites/ball.png</file>
+        <file>images/sprites/circle.png</file>
+        <file>images/sprites/disc.png</file>
+        <file>images/sprites/dna.png</file>
+        <file>images/sprites/holon.png</file>
+        <file>images/sprites/mp3.png</file>
+        <file>images/sprites/snowflake1.png</file>
+        <file>images/sprites/snowflake2.png</file>
+        <file>images/sprites/snowflake3.png</file>
+        <file>images/sprites/snowflake4.png</file>
+        <file>images/sprites/snowflake5.png</file>
+        <file>images/sprites/snowflake7_alpha.png</file>
+        <file>images/sprites/spark1.png</file>
     </qresource>
 </RCC>
