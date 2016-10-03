@@ -11,11 +11,6 @@ import QtQuick.Dialogs 1.2
 import 'services/'
 import 'ui/'
 
-
-import QtCanvas3D 1.0
-import "noomap.js" as GLCode
-
-
 ApplicationWindow {
     id: window
     title: qsTr("H⁴OME")
@@ -151,7 +146,8 @@ ApplicationWindow {
         onLoaded: messageDialog.show(holarchy)
     }
 
-    NoomapInterface {
+    //NoomapInterface {
+    Noomap3DInterface {
         id: noomap_interface
         holarchy: holarchy
         anchors.fill: parent
@@ -159,35 +155,6 @@ ApplicationWindow {
 
     Component.onCompleted: {
         holarchy.loadHolon('me.lucksus');
-        holarchy.loaded.connect(holarchyUpdate);
-    }
-
-    function holarchyUpdate() {
-        GLCode.holarchyUpdate(holarchy);
-    }
-
-    Canvas3D {
-        id: canvas3d
-        anchors.fill: parent
-
-        onInitializeGL: {
-            GLCode.initializeGL(canvas3d, eventSource, window);
-        }
-        onPaintGL: {
-            GLCode.paintGL(canvas3d);
-            //fpsDisplay.fps = canvas3d.fps;
-        }
-
-        onResizeGL: {
-            GLCode.onResizeGL(canvas3d);
-        }
-
-        ControlEventSource {
-            anchors.fill: parent
-            focus: true
-            id: eventSource
-        }
-
     }
 
 }
