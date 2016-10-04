@@ -152,6 +152,8 @@ ApplicationWindow {
 
     Component.onCompleted: {
       //  holarchy.loadHolon('me.lucksus');
+
+        // Test HolonStorage:
         var test_holon = {
             _holon_title: 'Test Holon',
             _holon_nodes: {
@@ -159,10 +161,14 @@ ApplicationWindow {
             }
         }
 
+        // We save a test holon ...
         var hash = HolonStorage.put(JSON.stringify(test_holon))
+        // ... and display it's hash value.
         console.log(hash)
 
+        // Now we try to get that same holon by providing the hash ...
         var holon = HolonStorage.get_sync(hash);
+        // ... and display the result.
         console.log(holon);
     }
 
