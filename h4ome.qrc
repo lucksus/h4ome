@@ -9,9 +9,6 @@
         <file>images/drawer.png</file>
         <file>src/main.cpp</file>
         <file>images/menu.png</file>
-        <file>noomap.js</file>
-        <file>ControlEventSource.qml</file>
-        <file>three.js</file>
         <file>images/sprites/ball.png</file>
         <file>images/sprites/circle.png</file>
         <file>images/sprites/disc.png</file>
@@ -25,5 +22,9 @@
         <file>images/sprites/snowflake5.png</file>
         <file>images/sprites/snowflake7_alpha.png</file>
         <file>images/sprites/spark1.png</file>
+        <file>js/noomap.js</file>
+        <file>ui/ControlEventSource.qml</file>
+        <file>ui/Noomap3DInterface.qml</file>
+        <file>js/three.js</file>
     </qresource>
 </RCC>

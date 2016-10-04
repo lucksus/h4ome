@@ -32,3 +32,4 @@ DISTFILES += \
     android/gradlew.bat
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+QMAKE_MAC_SDK = macosx10.12
