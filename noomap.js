@@ -1,4 +1,4 @@
-Qt.include("three.js")
+Qt.include("../js/three.js")
 
 var camera, scene, renderer;
 var root_holon, focussed_holon, current_holarchy;

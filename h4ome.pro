@@ -29,7 +29,8 @@ DISTFILES += \
     android/res/values/libs.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat
+    android/gradlew.bat \
+    noomap.js
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 QMAKE_MAC_SDK = macosx10.12

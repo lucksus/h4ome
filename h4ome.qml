@@ -3,9 +3,9 @@ import QtQuick 2.0
 
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
-import QtQuick.Controls.Material 2.0
-import QtQuick.Controls.Universal 2.0
 import Qt.labs.settings 1.0
+
+import QtQuick.Controls.Styles 1.3
 
 import QtQuick.Dialogs 1.2
 import 'services/'
@@ -15,65 +15,62 @@ ApplicationWindow {
     id: window
     title: qsTr("H⁴OME")
     visible: true
+    color: "black"
 
-    Settings {
-        id: settings
-        property string style: "Universal"
-    }
+    header: Rectangle {
+            color: Qt.rgba(0,0,0,0.75)
+            width: parent.width
+            height: 50
+            RowLayout {
+                spacing: 20
+                anchors.fill: parent
 
-    header: ToolBar {
-        Material.foreground: "white"
-
-        RowLayout {
-            spacing: 20
-            anchors.fill: parent
-
-
-            ToolButton {
-                contentItem: Image {
-                    fillMode: Image.Pad
-                    horizontalAlignment: Image.AlignHCenter
-                    verticalAlignment: Image.AlignVCenter
-                    source: "qrc:/images/drawer.png"
-                }
-                onClicked: drawer.open()
-            }
-
-            Label {
-                id: titleLabel
-                text: title
-                font.pixelSize: 20
-                elide: Label.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                Layout.fillWidth: true
-            }
-
-            ToolButton {
-                contentItem: Image {
-                    fillMode: Image.Pad
-                    horizontalAlignment: Image.AlignHCenter
-                    verticalAlignment: Image.AlignVCenter
-                    source: "qrc:/images/menu.png"
-                }
-                onClicked: optionsMenu.open()
-
-                Menu {
-                    id: optionsMenu
-                    x: parent.width - width
-                    transformOrigin: Menu.TopRight
-
-                    MenuItem {
-                        text: qsTr("Load ~me.larky")
-                        onTriggered: holarchy.loadHolon('me.larky')
+                ToolButton {
+                    contentItem: Image {
+                        fillMode: Image.Pad
+                        horizontalAlignment: Image.AlignHCenter
+                        verticalAlignment: Image.AlignVCenter
+                        source: "qrc:/images/drawer.png"
                     }
-                    MenuItem {
-                        text: qsTr("Exit")
-                        onTriggered: Qt.quit();
+                    onClicked: drawer.open()
+                }
+
+                Label {
+                    id: titleLabel
+                    text: title
+                    color: "white"
+                    font.pixelSize: 20
+                    elide: Label.ElideRight
+                    horizontalAlignment: Qt.AlignHCenter
+                    verticalAlignment: Qt.AlignVCenter
+                    Layout.fillWidth: true
+                }
+
+                ToolButton {
+                    contentItem: Image {
+                        fillMode: Image.Pad
+                        horizontalAlignment: Image.AlignHCenter
+                        verticalAlignment: Image.AlignVCenter
+                        source: "qrc:/images/menu.png"
+                    }
+                    onClicked: optionsMenu.open()
+
+                    Menu {
+                        id: optionsMenu
+                        x: parent.width - width
+                        transformOrigin: Menu.TopRight
+
+                        MenuItem {
+                            text: qsTr("Load ~me.larky")
+                            onTriggered: holarchy.loadHolon('me.larky')
+                        }
+                        MenuItem {
+                            text: qsTr("Exit")
+                            onTriggered: Qt.quit();
+                        }
                     }
                 }
             }
-        }
     }
 
     Drawer {
@@ -136,7 +133,7 @@ ApplicationWindow {
 
         function show(holarchy) {
             popupLabel.text = 'Got ' + holarchy.holons.length + ' holons and ' +
-                    holarchy.links.length + ' links!';
+                    holarchy.links.length + ' links from Noomap!';
             messageDialog.open();
         }
     }
@@ -154,7 +151,7 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
-        holarchy.loadHolon('me.lucksus');
+      //  holarchy.loadHolon('me.lucksus');
     }
 
 }

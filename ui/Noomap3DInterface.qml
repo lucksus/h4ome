@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QtCanvas3D 1.0
-import "qrc:/js/noomap.js" as GLCode
+import "../noomap.js" as GLCode
 
 Canvas3D {
     id: canvas3d
