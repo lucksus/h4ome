@@ -19,7 +19,7 @@
   _holon_nodes: {
     "intention1": "Qmasdnlwsakdnt32",
     "vision1": "Qmasdinwlijsa"
-  }
+  },
 
   _holon_edges: [
     {
@@ -41,7 +41,7 @@
       source: "intention1",
       destination: "vision1"
     }
-  ]
+  ],
 
   // Holon subjects are links to other holons which are not yet resolved
   // but are already named and potentially used within this holon.
