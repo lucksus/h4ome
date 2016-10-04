@@ -50,87 +50,102 @@ function updateScene()
     var parameters = [];
 
     var sf = 0.4;
-    var sf_particle_total = 1;
     var def_size = 30;
 
-    if (!current_holarchy)
+    var holons;
+
+    // ACTUAL DATA
+    if (current_holarchy)
     {
-        console.log("loading example holon visualisation")
-        parameters = [
-            [ [0.5,0.5,0.5], sprites.ball, 30, 11*sf_particle_total ],
-            [ [1, 0, 1], sprites.ball, 30, 54*sf_particle_total ],
-            [ [1, 1, 1], sprites.ball, 30, 26*sf_particle_total ],
-            [ [0, 0, 1], sprites.ball, 30, 29*sf_particle_total ],
-
-            [ [1, 1, 1], sprites.dna, 30, 64*sf_particle_total ],
-            [ [1, 1, 1], sprites.mp3, 10, 1000*sf_particle_total ]
-
-        ];
+        holons = current_holarchy.holons;
     }
+    // EXAMPLE DATA
     else
     {
-        console.log("loading holon visualisation for "+current_holarchy.getHolonById(root_holon).t)
+        holons = [];
 
-        var holons = current_holarchy.holons;
+        for (var i = 0; i < 100; i++)
+            holons.push({_t: 'v'})
 
-        var color_from_type = function(type)
-        {
-            switch(type)
-            {
-                case 'v': return new THREE.Color("rgb(180,29,235)");
-                case 'i': return new THREE.Color("rgb(255,255,0)");
-                case 's': return new THREE.Color("rgb(255,140,0)");
-                case 'p': return new THREE.Color("rgb(0,200,0)");
-                case 'd': return new THREE.Color("rgb(255,153,255)");
+        for (var i = 0; i < 200; i++)
+            holons.push({_t: 'd'})
 
-                default: return new THREE.Color("rgb(128,0,128)");
-            }
-        }
+        for (var i = 0; i < 300; i++)
+            holons.push({_t: 'i'})
 
-        clearScene();
+        for (var i = 0; i < 10; i++)
+            holons.push({_t: 'p'})
 
-        var fIndex = {};
+        for (var i = 0; i < 300; i++)
+            holons.push({_t: 's'})
 
-        for (var i=0; i < holons.length; i++)
-        {
-            var holon = holons[i];
+        for (var i = 0; i < 1000; i++)
+            holons.push({_t: 'dna'})
 
-            if (!fIndex[holon._t])
-                fIndex[holon._t] = 1;
-            else
-                fIndex[holon._t]++;
-        }
-
-        for (var f in fIndex)
-        {
-            var col = color_from_type( f );
-            parameters.push( [ [col.r,col.g,col.b], sprites.ball, def_size, fIndex[f]*sf_particle_total ] );
-        }
-
+        for (var i = 0; i < 500; i++)
+            holons.push({_t: 'mp3'})
     }
 
-    var max_total = 0;
 
-    for ( var i = 0; i < parameters.length; i ++ )
-        if (parameters[i][3] > max_total)
-            max_total = parameters[i][3];
-
-    // Sort and rank by param 3
-    // Set radius and holon size by rank
-
-    // I WANT TO BE ABLE TO SWITCH DYNAMICALLY BETWEEN MANY DIFFERENT GEOMETRIES
-
-    var materials = [];
-
-    for ( i = 0; i < parameters.length; i ++ )
+    var style_from_type = function(type)
     {
-        var color  = parameters[i][0];
-        var sprite = parameters[i][1];
-        var size   = parameters[i][2];
+        switch(type)
+        {
+            case 'v': return new THREE.Color("rgb(180,29,235)");
+            case 'i': return new THREE.Color("rgb(255,255,0)");
+            case 's': return new THREE.Color("rgb(255,140,0)");
+            case 'p': return new THREE.Color("rgb(0,200,0)");
+            case 'd': return new THREE.Color("rgb(255,153,255)");
+            case 'dna': return sprites.dna;
+            case 'mp3': return sprites.mp3;
 
+
+            default: return new THREE.Color("rgb(128,0,128)");
+        }
+    }
+
+    clearScene();
+
+    var fIndex = {};
+    var sortedFrequencies = [];
+
+    for (var i=0; i < holons.length; i++)
+    {
+        var holon = holons[i];
+
+        if (!fIndex[holon._t])
+            fIndex[holon._t] = [i];
+        else
+            fIndex[holon._t].push(i);
+
+        if (sortedFrequencies.indexOf(holon._t) === -1)
+            sortedFrequencies.push(holon._t);
+    }
+
+
+    sortedFrequencies = sortedFrequencies.sort(function (a, b) {
+        var c = fIndex[a].length;
+        var d = fIndex[b].length;
+        return c - d;
+    });
+
+    var holonVertices = {};
+
+
+    var lineMaterial = new THREE.LineDashedMaterial({
+        color: 0x0000ff
+    });
+
+
+    for (var fi = 0; fi < sortedFrequencies.length; fi++)
+    {
+        var f = sortedFrequencies[fi];
 
         var geometry = new THREE.Geometry();
-        for ( var j = 0; j < parameters[i][3]; j ++ ) {
+
+        for ( var j = 0; j < fIndex[f].length; j ++ ) {
+
+            // CREATE HOLON
 
             var vertex = new THREE.Vector3();
             vertex.x = Math.random() * 2000*sf - 1000*sf;
@@ -138,23 +153,95 @@ function updateScene()
             vertex.z = Math.random() * 2000*sf - 1000*sf;
 
             vertex.normalize()
-            vertex.multiplyScalar(500 * 1 )  //(parameters[i][3]/(max_total))
+            vertex.multiplyScalar(500 * ((fi+1) / (sortedFrequencies.length+1)) )  //(parameters[i][3]/(max_total))
 
             geometry.vertices.push( vertex );
+
+            holonVertices[holons[fIndex[f][j]]._id] = vertex;
+
+
         }
 
 
-        materials[i] = new THREE.PointsMaterial( { size: size, map: sprite, blending: THREE.AdditiveBlending, depthTest: false, transparent : true } );
-        materials[i].color.setRGB( color[0], color[1], color[2] );
+        var material = new THREE.PointsMaterial( { size: def_size, blending: THREE.AdditiveBlending, depthTest: false, transparent : true } );
 
-        var particles = new THREE.Points( geometry, materials[i] );
+        var style = style_from_type( f );
 
-        particles.rotation.x = Math.random() * 6;
-        particles.rotation.y = Math.random() * 6;
-        particles.rotation.z = Math.random() * 6;
+        if (style instanceof THREE.Color)
+        {
+            material.color = style; //.setRGB( color[0], color[1], color[2] );
+            material.map = sprites.ball;
+        }
+        else
+        {
+            material.map = style;
+        }
+
+
+        var particles = new THREE.Points( geometry, material );
 
         scene.add( particles );
+
     }
+
+    // CREATE LINKS
+
+    /*
+    // Draw lines from parent to child holons
+    if (current_holarchy)
+    {
+
+        for (var i=0; i < holons.length; i++)
+        {
+            var h = holons[i];
+            var hchildren = current_holarchy.getChildren(h._id);
+
+            for (var k=0; k<hchildren.length; k++)
+            {
+                if (holonVertices[hchildren[k]._id])
+                {
+                    var lineGeometry = new THREE.Geometry();
+                    lineGeometry.vertices.push(holonVertices[h._id]);
+                    lineGeometry.vertices.push(holonVertices[hchildren[k]._id]);
+
+                    var line = new THREE.Line(lineGeometry, lineMaterial);
+                    scene.add(line);
+                }
+            }
+        }
+    }
+    */
+
+
+    /*
+    // Draw lines from root holon to children of root
+    if (current_holarchy)
+    {
+
+        var h = current_holarchy.getHolonById(current_holarchy.root_id);
+        var hchildren = current_holarchy.getChildren(h._id);
+
+        for (var k=0; k<hchildren.length; k++)
+        {
+            if (holonVertices[hchildren[k]._id])
+            {
+                var lineGeometry = new THREE.Geometry();
+                lineGeometry.vertices.push(holonVertices[h._id]);
+                lineGeometry.vertices.push(holonVertices[hchildren[k]._id]);
+
+                var line = new THREE.Line(lineGeometry, lineMaterial);
+
+                line.material.opacity = 0.2;
+
+                scene.add(line);
+            }
+        }
+
+    }
+    */
+
+
+
 }
 
 function paintGL(canvas) {
@@ -166,33 +253,20 @@ function paintGL(canvas) {
 
     camera.lookAt( scene.position );
 
-    for (var i = 0; i < scene.children.length; i ++ ) {
-
+    var k = 0;
+    for (var i = 0; i < scene.children.length; i ++ )
+    {
         var object = scene.children[ i ];
 
-        if ( object instanceof THREE.Points ) {
+        var j = i - k;
 
-            object.rotation.y = time * ( i < 4 ? i + 1 : - ( i + 1 ) );
+        if ( !( object instanceof THREE.Points) )
+            k++;
 
-        }
-
-    }
-
-
-    //if (explode && scene.children[3].scale.x > 0.02)
-   //     scene.children[3].scale.multiplyScalar(0.8)
-
-
-/*
-    for ( i = 0; i < materials.length; i ++ ) {
-
-        color = parameters[i][0];
-
-        h = ( 360 * ( color[0] + time ) % 360 ) / 360;
-        materials[i].color.setHSL( h, color[1], color[2] );
+        object.rotation.y = time * ( j < 4 ? j + 1 : - ( j + 1 ) );
 
     }
-*/
+
     renderer.render( scene, camera );
 
 }
