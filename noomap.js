@@ -11,7 +11,7 @@ function initializeGL(canvas, eventSource, window) {
     camera.position.z = 1000;
 
     scene = new THREE.Scene();
-    //scene.fog = new THREE.FogExp2( 0x000000, 0.0008 );
+    scene.fog = new THREE.FogExp2( 0x000000, 0.0005 );
 
     var textureLoader = new THREE.TextureLoader();
 
@@ -64,25 +64,25 @@ function updateScene()
     {
         holons = [];
 
+        for (var i = 0; i < 80; i++)
+            holons.push({_t: 'f'})
+
         for (var i = 0; i < 100; i++)
             holons.push({_t: 'v'})
 
-        for (var i = 0; i < 200; i++)
+        for (var i = 0; i < 120; i++)
             holons.push({_t: 'd'})
 
-        for (var i = 0; i < 300; i++)
+        for (var i = 0; i < 100; i++)
             holons.push({_t: 'i'})
 
-        for (var i = 0; i < 10; i++)
-            holons.push({_t: 'p'})
-
-        for (var i = 0; i < 300; i++)
-            holons.push({_t: 's'})
-
-        for (var i = 0; i < 1000; i++)
+        for (var i = 0; i < 640; i++)
             holons.push({_t: 'dna'})
 
-        for (var i = 0; i < 500; i++)
+        for (var i = 0; i < 300; i++)
+            holons.push({_t: 'flake'})
+
+        for (var i = 0; i < 100; i++)
             holons.push({_t: 'mp3'})
     }
 
@@ -96,9 +96,11 @@ function updateScene()
             case 's': return new THREE.Color("rgb(255,140,0)");
             case 'p': return new THREE.Color("rgb(0,200,0)");
             case 'd': return new THREE.Color("rgb(255,153,255)");
+            case 'f': return new THREE.Color("rgb(0,0,200)");
+
             case 'dna': return sprites.dna;
             case 'mp3': return sprites.mp3;
-
+            case 'flake': return sprites.flake;
 
             default: return new THREE.Color("rgb(128,0,128)");
         }
@@ -258,12 +260,13 @@ function paintGL(canvas) {
     {
         var object = scene.children[ i ];
 
-        var j = i - k;
+       // var j = i - k;
 
-        if ( !( object instanceof THREE.Points) )
-            k++;
+      //  if ( !( object instanceof THREE.Points) )
+       //     k++;
 
-        object.rotation.y = time * ( j < 4 ? j + 1 : - ( j + 1 ) );
+        if (  object instanceof THREE.Points )
+            object.rotation.y = time * ( i < 4 ? i + 1 : - ( i + 1 ) );
 
     }
 
