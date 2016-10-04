@@ -152,6 +152,18 @@ ApplicationWindow {
 
     Component.onCompleted: {
       //  holarchy.loadHolon('me.lucksus');
+        var test_holon = {
+            _holon_title: 'Test Holon',
+            _holon_nodes: {
+                'peter': 'asdfasdswe23tASD24tFQ@#$TASDFASFAWETQ@#R'
+            }
+        }
+
+        var hash = HolonStorage.put(JSON.stringify(test_holon))
+        console.log(hash)
+
+        var holon = HolonStorage.get_sync(hash);
+        console.log(holon);
     }
 
 }
