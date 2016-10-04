@@ -13,7 +13,7 @@
 
   _type_holon_edge_types: [
     // TBD
-  ]
+  ],
 
   _type_holon_subjects: [
     {

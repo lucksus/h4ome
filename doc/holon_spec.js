@@ -1,10 +1,11 @@
 {
-  // Every holon has a name for user interaction.
+  // Every holon has a title for user interaction.
   // This is not its address which is its IPFS hash.
-  _holon_name: "Nico's Example Holon",
+  _holon_title: "Nico's Example Holon",
 
   // Holons are immutable, so no 'last modified', but creation date
-  _holon_created: "20160719_0413",
+  // Unix time format
+  _holon_created: "1475577689319",
 
   // If this holon was created as the new state of a pre-existing holon
   // this field holds the address (IPFS hash) of the preceding state
@@ -22,21 +23,21 @@
 
   _holon_edges: [
     {
-      // 'parentOf' edges don't necessarily need a source field,
+      // 'contains' edges don't necessarily need a source field,
       // it defaults to this holon.
-      type: "parentOf",
+      type: "contains",
       destination: "intention1"
     },
     {
-      type: "parentOf",
+      type: "contains",
       destination: "vision1"
     },
     {
-      type: "parentOf",
+      type: "contains",
       destination: "vision1"
     },
     {
-      type: "implements",
+      type: "manifests",
       source: "intention1",
       destination: "vision1"
     }
@@ -61,14 +62,14 @@
   _holon_subjects: [
     {
       // Name of this subject
-      name: 'vision to implement',
+      name: 'vision to manifest',
 
       // The type of the referenced holon (optional)
       type: 'vision',
 
       // The type of the edge within the surrounding context that connects
       // this to the other holon. (optional)
-      edge_type: 'implements',
+      edge_type: 'manifests',
 
       // Fixed quantity of other holons referenced by this subject
       // (optional)
