@@ -4,7 +4,7 @@ import 'qrc:/seeds/namespaces.js' as NAMESPACE_SEEDS
 
 Item {
     id: namespaceController
-    property var namespaces: JSON.parse(settings.namespaces_json)
+    property var namespaces
 
     Settings {
         id: settings
@@ -12,8 +12,10 @@ Item {
     }
 
     Component.onCompleted: {
-        if (settings.namespaces_json == "")
+        console.log(settings.namespaces_json)
+        if (settings.namespaces_json == "{}")
             seed()
+        namespaces = JSON.parse(settings.namespaces_json)
     }
 
     function getHolon(path) {
