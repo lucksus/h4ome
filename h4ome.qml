@@ -170,6 +170,9 @@ ApplicationWindow {
         var holon = HolonStorage.get_sync(hash);
         // ... and display the result.
         console.log(holon);
+
+        var holon = NamespaceController.getHolon("Qm5aaf5c00fe1d97edb67d0e0c30496914ba49df11d2630863c695fa83761c367f");
+        console.log(holon);
     }
 
 }

@@ -31,7 +31,9 @@ DISTFILES += \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat \
-    noomap.js
+    noomap.js \
+    services/NamespaceController.qml \
+    seeds/*
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 QMAKE_MAC_SDK = macosx10.12
