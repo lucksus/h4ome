@@ -157,6 +157,8 @@ ApplicationWindow {
     Component.onCompleted: {
       //  holarchy.loadHolon('me.lucksus');
 
+        h4omeFilesystem.init()
+
         // Test HolonStorage:
         var test_holon = {
             _holon_title: 'Test Holon',
@@ -177,6 +179,16 @@ ApplicationWindow {
 
         var holon = h4omeFilesystem.getHolon("/home/terence/holon1");
         console.log(holon);
+
+        var test_holon2 = {
+            _holon_title: 'My intention'
+        }
+
+        h4omeFilesystem.saveHolon("/home/terence/intention1", test_holon2)
+        holon = h4omeFilesystem.getHolon("/home/terence/intention1")
+        console.log(holon)
+
+
     }
 
 }
