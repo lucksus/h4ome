@@ -2,8 +2,10 @@
 #include <QtCore/QDir>
 #include <QtQuick/QQuickView>
 #include <QtQml/QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QQuickStyle>
 #include <QSettings>
+#include "holonstorage.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +23,11 @@ int main(int argc, char *argv[])
     else
         QQuickStyle::setStyle(settings.value("style").toString());
 
+    QString storage_dir = QString("%1/holon_storage").arg(app.applicationDirPath());
+    HolonStorage holon_storage(storage_dir);
+
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty(QString("HolonStorage"), &holon_storage);
     engine.load(QUrl("qrc:/h4ome.qml"));
     if (engine.rootObjects().isEmpty())
         return -1;
