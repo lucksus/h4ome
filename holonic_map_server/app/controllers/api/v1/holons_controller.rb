@@ -1,4 +1,4 @@
-class API::V1::HolonsController < ApplicationController
+class API::V1::HolonsController < API::V1::BaseController
   def show
   end
 

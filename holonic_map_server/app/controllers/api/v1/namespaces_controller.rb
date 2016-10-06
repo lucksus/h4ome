@@ -1,4 +1,4 @@
-class API::V1::NamespacesController < ApplicationController
+class API::V1::NamespacesController < API::V1::BaseController
   def index
   end
 
