@@ -150,14 +150,19 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
+    NamespacesModel {
+        id: namespaces
+    }
+
     NamespaceController {
         id: h4omeFilesystem
+        namespaces: namespaces
     }
 
     Component.onCompleted: {
       //  holarchy.loadHolon('me.lucksus');
 
-        h4omeFilesystem.init()
+        namespaces.init()
 
         // Test HolonStorage:
         var test_holon = {

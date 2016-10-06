@@ -29,5 +29,7 @@
         <file>seeds/namespaces.js</file>
         <file>services/NamespaceController.qml</file>
         <file>js/lodash.js</file>
+        <file>services/NamespacesModel.qml</file>
+        <file>js/Holon.js</file>
     </qresource>
 </RCC>
