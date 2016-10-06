@@ -26,5 +26,10 @@
         <file>ui/Noomap3DInterface.qml</file>
         <file>js/three.js</file>
         <file>noomap.js</file>
+        <file>seeds/namespaces.js</file>
+        <file>services/NamespaceController.qml</file>
+        <file>js/lodash.js</file>
+        <file>services/NamespacesModel.qml</file>
+        <file>js/Holon.js</file>
     </qresource>
 </RCC>
