@@ -26,7 +26,7 @@ securitySchemes:
   post:
     description: Login i.e. retrieve JWT (https://jwt.io/)
     queryParameters:
-      login:
+      email:
         type: string
         required: true
       password:
@@ -49,6 +49,10 @@ securitySchemes:
         type: string
         description: must be unique
         required: true
+      username:
+        type: string
+        description: must be unique
+        required: true
       password:
         type: string
         required: true
@@ -56,16 +60,45 @@ securitySchemes:
         type: string
         required: true
 
-  /reset_password:
-    post:
-      description: Send logged in user a password reset mail
-      queryParameters:
-        email:
-          type: string
-          description: must be unique
-          required: true
+  # not yet implemented
+  #/reset_password:
+  #  post:
+  #    description: Send logged in user a password reset mail
+  #    queryParameters:
+  #      email:
+  #        type: string
+  #        description: must be unique
+  #        required: true
 
-/ipfs:
+/holons:
+  post:
+    description: Create/post a new holon
+    #securedBy: [validUserSession]
+    queryParameters:
+      data:
+        type: string
+        description: Holon to save as JSON
+        required: true
+
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "meta": {
+                  "errors": [],
+                  "validation":[]
+                },
+                "data": {
+                  "hash": "Qmc6c2f19c50c13ff75c30a6199a627aaf38cfe6a38897ff22e09a77f842233ffd"
+                }
+              }
+      #400:
+      #  body:
+      #    application/json:
+      #      example: '{ "_status": "illformatted holon" }'
+
   /{hash}:
     get:
       description: Get a holon via it's IPFS hash id
@@ -75,43 +108,47 @@ securitySchemes:
             application/json:
               example: |
                 {
-                  "_name": "lucksus",
-                  "_global_path": "/home/lucksus",
-                  "_id": "Qx3dsalknaAd4t",
-                  "_created": "20160719_0413",
-                  "_precursor": "Qjao39dser3",
-                  "_edges": [
-                    {
-                      "type": "parentOf",
-                      "destination": "/home/lucksus/intention1"
-                    },
-                    {
-                      "type": "parentOf",
-                      "destination": "/home/lucksus/vision1"
-                    },
-                    {
-                      "type": "parentOf",
-                      "destination": "/home/lucksus/vision1"
-                    },
-                    {
-                      "type": "implements",
-                      "source": "/home/lucksus/intention1",
-                      "destination": "/home/lucksus/vision1"
+                  "meta": {
+                    "errors":[],
+                    "validation":[]
+                  },
+                  "data": {
+                    "hash": "Qmc6c2f19c50c13ff75c30a6199a627aaf38cfe6a38897ff22e09a77f842233ffd",
+                    "data": {
+                      "_holon_name": "lucksus",
+                      "_holon_reated": "20160719_0413",
+                      "_holon_precursor": "Qjao39dser3",
+                      "_holon_nodes": {
+                        "intention1": "Qmasdnlwsakdnt32",
+                        "vision1": "Qmasdinwlijsa"
+                      }
+                      "_holon_edges": [
+                        {
+                          "type": "contains",
+                          "destination": "/home/lucksus/intention1"
+                        },
+                        {
+                          "type": "contains",
+                          "destination": "/home/lucksus/vision1"
+                        },
+                        {
+                          "type": "contains",
+                          "destination": "/home/lucksus/vision1"
+                        },
+                        {
+                          "type": "manifests",
+                          "source": "/home/lucksus/intention1",
+                          "destination": "/home/lucksus/vision1"
+                        }
+                      ]
                     }
-                  ],
-
-                  "intention1": {
-                    "/": "Qmasdnlwsakdnt32"
                   }
-
-                  "vision1": {
-                    "/": "Qmasdinwlijsa"
-                  }
-
                 }
 
 
-/home:
+
+
+/namespaces:
   /{homepath}:
     get:
       description: Get a holon via it's path name within the H4OME name space ("/home/lucksus/intention1")
@@ -120,166 +157,56 @@ securitySchemes:
           body:
             application/json:
               example: |
-                '{
-                  "_name": "Hello Holon",
-                  "_global_path": "/home/lucksus/hello_function",
-                  "_id": "Qx3dasdf333Ad4t",
-                  "_lang": "ES6",
-                  "_function": |
-                    _holon.setTitle("Hello World!")
-                }'
+                {
+                  "meta": {
+                    "errors":[],
+                    "validation":[]
+                  },
+                  "data": {
+                    "_holon_name": "Hello Holon",
+                    "_active_holon_lang": "ES6",
+                    "_active_holon_function": |
+                      _holon.setTitle("Hello World!")
+                  }
+                }
     put:
       description: |
         Sets/updates the H4OME name registrar for the given pathname
         if the logged in user has wright access to that path
       securedBy: [validUserSession]
       queryParameters:
-        pathname:
+        path:
           type: string
           required: true
-        id:
+        hash:
           type: string
           required: true
-      responses:
-        200:
-          body:
-            application/json:
-              example: '{ "_status": "ok" }'
-        401:
-          body:
-            application/json:
-              example: '{ "_status": "not allowed" }'
-
-
-
-
-
-/holons:
-  post:
-    description: Create/post a new holon
-    securedBy: [validUserSession]
-
-    responses:
-      200:
-        body:
-          application/json:
-            example: '{ "_status": "ok" }'
-      404:
-        body:
-          application/json:
-            example: '{ "_status": "illformatted holon" }'
-
-  /{address}:
-    get:
-      description: Get a holon via it's holonic id ("me.lucksus")
       responses:
         200:
           body:
             application/json:
               example: |
                 {
-                  "_name": "NoomapInterface",
-                  "_global_path": "/home/lucksus/noomap_interface",
-                  "_id": "Qx677asdfasdg4t",
-                  "_holonic_id": "int.noomap"
-                  "_lang": "qml",
-                  "_qml": |
-                    import QtQuick 2.4
-
-                    Rectangle {
-                        id: noomap_interface
-                        color: 'black'
-
-                        property var holarchy
-                        property var root_holon
-                        property var focussed_holon
-
-                        property var current_holons: []
-
-                        Component.onCompleted: {
-                            holarchy.loaded.connect(holarchyUpdate)
-                        }
-
-                        function holarchyUpdate() {
-                            noomap_interface.root_holon = holarchy.root_id
-                            noomap_interface.focussed_holon = holarchy.root_id
-                            createHolonDelegates()
-                        }
-
-                        function createHolonDelegates() {
-                            var children = holarchy.getChildren( noomap_interface.focussed_holon )
-
-
-                            var color_from_type = function(type) {
-                                switch(type){
-                                case 'v': return 'purple';
-                                case 'i': return 'yellow';
-                                case 's': return 'orange';
-                                case 'p': return 'green';
-                                case 'd': return 'pink';
-
-                                }
-                            }
-
-                            var component = Qt.createComponent(_holon.delegateSource);
-                            //while(component.status !== Component.Ready) ;
-
-                            clearHolons();
-
-                            for(var i=0; i < children.length; i++){
-                                var holon = children[i];
-                                var delegate = component.createObject(noomap_interface, {
-                                  'color': color_from_type( holon._t ),
-                                  'source': holon
-                                });
-                                current_holons.push( delegate );
-                            }
-                        }
-
-                        function clearHolons() {
-                            for(var i=0; i < current_holons.length; i++){
-                                current_holons[i].destroy();
-                            }
-                            current_holons = []
-                        }
-
-                      "delegateSource": |
-                        import QtQuick 2.4
-
-                        Rectangle {
-                            id: holon
-                            property double size: parent_size * source.s
-                            property var source
-                            property var parent_size: parent.height < parent.width ? parent.height : parent.width
-                            width: size
-                            height: size
-                            radius: size/2
-                            color: 'red'
-                            border.color: 'white'
-                            border.width: 2
-
-                            x: calc_screen_coord( source.x )
-                            y: calc_screen_coord( source.y )
-
-                            Text {
-                                text: holon.source.t
-                                color: 'white'
-                                anchors.centerIn: parent
-                                scale: holon.size / 50
-                                width: holon.size
-                                height: holon.size
-                                wrapMode: Text.Wrap
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                clip: true
-                            }
-
-                            function calc_screen_coord(logical_coord) {
-                                return (holon.parent_size/2)*logical_coord + holon.parent_size/2 - size/2; // don't need -size/2 if anchor point is center
-                            }
-
-                        }
-
-                    }
-
+                  "meta": {
+                    "errors":[],
+                    "validation":[]
+                  },
+                  "data": {
+                    "path": "/home/hein23",
+                    "hash": "asdfasdfasdfasdf"
+                  }
+                }
+        401:
+          body:
+            application/json:
+              example: |
+                {
+                  "meta": {
+                    "errors":[
+                      {
+                        "message": "write not allowed"
+                      }
+                    ],
+                    "validation":[]
+                  }
                 }
