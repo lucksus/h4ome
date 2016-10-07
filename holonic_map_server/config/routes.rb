@@ -4,7 +4,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       resources :sessions, only: :create
-      resources :namespaces, only: [:index, :show, :update]
+      resources :namespaces, only: [:index]
+      get 'namespaces/*path', to: 'namespaces#show'
+      put 'namespaces/*path', to: 'namespaces#update'
       resources :holons, only: [:create, :show]
     end
   end
