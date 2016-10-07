@@ -9,7 +9,7 @@ class API::V1::BaseController < ApplicationController
   protected
 
   def error(exception)
-    raise exception unless env["ORIGINAL_FULLPATH"] =~ /^\/api/
+    raise exception unless Rails.env["ORIGINAL_FULLPATH"] =~ /^\/api/
 
     add_error('Internal server error', exception)
     set_status 500
