@@ -12,7 +12,7 @@ of Object Oriented Programming with Subject Oriented Programming.
 H4OME is designed to make use of [Ethereum](http://ethereum.org) and
 [IPFS](https://ipfs.io/), though in its first
 iterations and current state, those technologies are mocked within the
-Holonic Map Server (H4MS) API backend.
+Holonic Map Server (H2MS) API backend.
 
 The core of this system is the native client written mostly in QML/JavaScript
 with a bit of C++. This code base is meant to run on iOS, Android, Linux,
