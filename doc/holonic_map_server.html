@@ -151,156 +151,85 @@
         word-wrap: normal;
         white-space: pre;
       }
-    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>Holonic Map Server API documentation <small>version v1</small></h1><p>https://hms-mock.united-earth.vision/v1</p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="session" class="panel-title">/session</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_session"><span class="parent"></span>/session</a> <span class="methods"><a href="#session_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_session" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#session_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Login i.e. retrieve JWT (<a href="https://jwt.io/">https://jwt.io/</a>)</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="session_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/session</h4></div><div class="modal-body"><div class="alert alert-info"><p>Login i.e. retrieve JWT (<a href="https://jwt.io/">https://jwt.io/</a>)</p></div><ul class="nav nav-tabs"><li class="active"><a href="#session_post_request" data-toggle="tab">Request</a></li><li><a href="#session_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="session_post_request"><h3>Query Parameters</h3><ul><li><strong>login</strong>: <em>required (string)</em></li><li><strong>password</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="session_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Schema</strong>:</p><pre><code>{
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>Holonic Map Server API documentation <small>version v1</small></h1><p>https://hms-mock.united-earth.vision/v1</p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="session" class="panel-title">/session</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_session"><span class="parent"></span>/session</a> <span class="methods"><a href="#session_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_session" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#session_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Login i.e. retrieve JWT (<a href="https://jwt.io/">https://jwt.io/</a>)</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="session_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/session</h4></div><div class="modal-body"><div class="alert alert-info"><p>Login i.e. retrieve JWT (<a href="https://jwt.io/">https://jwt.io/</a>)</p></div><ul class="nav nav-tabs"><li class="active"><a href="#session_post_request" data-toggle="tab">Request</a></li><li><a href="#session_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="session_post_request"><h3>Query Parameters</h3><ul><li><strong>email</strong>: <em>required (string)</em></li><li><strong>password</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="session_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Schema</strong>:</p><pre><code>{
     "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJ1c2VyX2lkIjoyfQ.YP5otg8vBaJywp2Mik-qYqJfVCilqUa1ZNb1oQTyLFqmbYYIoDm0gpFbxojsGB80It1bXkQlso0q4KgoszOrm6j_ca1gjvgJaZqvdoNvuUXcGqw-lsxwLPCmb4r8yoUoh9FLyqIZ8qFLSuHWN6NE2W2grMenQr8l0edbG2dlGSWFPFfj50IgZwlf7x58Z4r-1F8GDsGVJanjG1U1jyMj_5LP2JraZIl0CZIu16YLA2C01PbuBvNfi0RQJS2xhhb3flwdBm11VZZ4LLSnjB6oexULKJjBTiXqTX6Eo3ku_TbyCJ8GZ4BHScz_MaQnYaP2IYWXWHZGWX77w7fZyovT8A"
 }
-</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="users" class="panel-title">/users</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_users"><span class="parent"></span>/users</a> <span class="methods"><a href="#users_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_users" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#users_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Create new user</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="users_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/users</h4></div><div class="modal-body"><div class="alert alert-info"><p>Create new user</p></div><ul class="nav nav-tabs"><li class="active"><a href="#users_post_request" data-toggle="tab">Request</a></li></ul><div class="tab-content"><div class="tab-pane active" id="users_post_request"><h3>Query Parameters</h3><ul><li><strong>email</strong>: <em>required (string)</em><p>must be unique</p></li><li><strong>password</strong>: <em>required (string)</em></li><li><strong>password_confirmation</strong>: <em>required (string)</em></li></ul></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_users_reset_password"><span class="parent">/users</span>/reset_password</a> <span class="methods"><a href="#users_reset_password_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_users_reset_password" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#users_reset_password_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Send logged in user a password reset mail</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="users_reset_password_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/users</span>/reset_password</h4></div><div class="modal-body"><div class="alert alert-info"><p>Send logged in user a password reset mail</p></div><ul class="nav nav-tabs"><li class="active"><a href="#users_reset_password_post_request" data-toggle="tab">Request</a></li></ul><div class="tab-content"><div class="tab-pane active" id="users_reset_password_post_request"><h3>Query Parameters</h3><ul><li><strong>email</strong>: <em>required (string)</em><p>must be unique</p></li></ul></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="ipfs" class="panel-title">/ipfs</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_ipfs__hash_"><span class="parent">/ipfs</span>/{hash}</a> <span class="methods"><a href="#ipfs__hash__get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_ipfs__hash_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#ipfs__hash__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Get a holon via it&#39;s IPFS hash id</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="ipfs__hash__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/ipfs</span>/{hash}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Get a holon via it&#39;s IPFS hash id</p></div><ul class="nav nav-tabs"><li class="active"><a href="#ipfs__hash__get_request" data-toggle="tab">Request</a></li><li><a href="#ipfs__hash__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="ipfs__hash__get_request"><h3>URI Parameters</h3><ul><li><strong>hash</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="ipfs__hash__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
-  "_name": "lucksus",
-  "_global_path": "/home/lucksus",
-  "_id": "Qx3dsalknaAd4t",
-  "_created": "20160719_0413",
-  "_precursor": "Qjao39dser3",
-  "_edges": [
-    {
-      "type": "parentOf",
-      "destination": "/home/lucksus/intention1"
-    },
-    {
-      "type": "parentOf",
-      "destination": "/home/lucksus/vision1"
-    },
-    {
-      "type": "parentOf",
-      "destination": "/home/lucksus/vision1"
-    },
-    {
-      "type": "implements",
-      "source": "/home/lucksus/intention1",
-      "destination": "/home/lucksus/vision1"
-    }
-  ],
-
-  "intention1": {
-    "/": "Qmasdnlwsakdnt32"
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="users" class="panel-title">/users</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_users"><span class="parent"></span>/users</a> <span class="methods"><a href="#users_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_users" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#users_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Create new user</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="users_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/users</h4></div><div class="modal-body"><div class="alert alert-info"><p>Create new user</p></div><ul class="nav nav-tabs"><li class="active"><a href="#users_post_request" data-toggle="tab">Request</a></li></ul><div class="tab-content"><div class="tab-pane active" id="users_post_request"><h3>Query Parameters</h3><ul><li><strong>email</strong>: <em>required (string)</em><p>must be unique</p></li><li><strong>username</strong>: <em>required (string)</em><p>must be unique</p></li><li><strong>password</strong>: <em>required (string)</em></li><li><strong>password_confirmation</strong>: <em>required (string)</em></li></ul></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="holons" class="panel-title">/holons</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_holons"><span class="parent"></span>/holons</a> <span class="methods"><a href="#holons_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_holons" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#holons_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Create/post a new holon</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="holons_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/holons</h4></div><div class="modal-body"><div class="alert alert-info"><p>Create/post a new holon</p></div><ul class="nav nav-tabs"><li class="active"><a href="#holons_post_request" data-toggle="tab">Request</a></li><li><a href="#holons_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="holons_post_request"><h3>Query Parameters</h3><ul><li><strong>data</strong>: <em>required (string)</em><p>Holon to save as JSON</p></li></ul></div><div class="tab-pane" id="holons_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "meta": {
+    "errors": [],
+    "validation":[]
+  },
+  "data": {
+    "hash": "Qmc6c2f19c50c13ff75c30a6199a627aaf38cfe6a38897ff22e09a77f842233ffd"
   }
-
-  "vision1": {
-    "/": "Qmasdinwlijsa"
-  }
-
 }
-</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="home" class="panel-title">/home</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_home__homepath_"><span class="parent">/home</span>/{homepath}</a> <span class="methods"><a href="#home__homepath__get"><span class="badge badge_get">get</span></a> <a href="#home__homepath__put"><span class="badge badge_put">put <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_home__homepath_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#home__homepath__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Get a holon via it&#39;s path name within the H4OME name space ("/home/lucksus/intention1")</p></div><div class="clearfix"></div></div><div onclick="window.location.href = '#home__homepath__put'" class="list-group-item"><span class="badge badge_put">put <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>Sets/updates the H4OME name registrar for the given pathname if the logged in user has wright access to that path</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="home__homepath__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/home</span>/{homepath}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Get a holon via it&#39;s path name within the H4OME name space ("/home/lucksus/intention1")</p></div><ul class="nav nav-tabs"><li class="active"><a href="#home__homepath__get_request" data-toggle="tab">Request</a></li><li><a href="#home__homepath__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="home__homepath__get_request"><h3>URI Parameters</h3><ul><li><strong>homepath</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="home__homepath__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>&#39;{
-  "_name": "Hello Holon",
-  "_global_path": "/home/lucksus/hello_function",
-  "_id": "Qx3dasdf333Ad4t",
-  "_lang": "ES6",
-  "_function": |
-    _holon.setTitle("Hello World!")
-}&#39;
-</code></pre></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="home__homepath__put"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_put">put <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent">/home</span>/{homepath}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Sets/updates the H4OME name registrar for the given pathname if the logged in user has wright access to that path</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>validUserSession</b><p>Some requests require authentication.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#home__homepath__put_request" data-toggle="tab">Request</a></li><li><a href="#home__homepath__put_response" data-toggle="tab">Response</a></li><li><a href="#home__homepath__put_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="home__homepath__put_request"><h3>URI Parameters</h3><ul><li><strong>homepath</strong>: <em>required (string)</em></li></ul><h3>Query Parameters</h3><ul><li><strong>pathname</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="home__homepath__put_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{ "_status": "ok" }</code></pre><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{ "_status": "not allowed" }</code></pre></div><div class="tab-pane" id="home__homepath__put_securedby"><h1>Secured by validUserSession</h1><h3>Headers</h3><ul><li><strong>JWT</strong>: <em>required (string)</em><p>JSON Web Token (<a href="https://jwt.io/">https://jwt.io/</a>). The token that identifies a valid user session. Get it by doing a POST to /session with valid credentials.</p></li></ul><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="holons" class="panel-title">/holons</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_holons"><span class="parent"></span>/holons</a> <span class="methods"><a href="#holons_post"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_holons" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#holons_post'" class="list-group-item"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>Create/post a new holon</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="holons_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent"></span>/holons</h4></div><div class="modal-body"><div class="alert alert-info"><p>Create/post a new holon</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>validUserSession</b><p>Some requests require authentication.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#holons_post_response" data-toggle="tab">Response</a></li><li><a href="#holons_post_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="holons_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{ "_status": "ok" }</code></pre><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{ "_status": "illformatted holon" }</code></pre></div><div class="tab-pane" id="holons_post_securedby"><h1>Secured by validUserSession</h1><h3>Headers</h3><ul><li><strong>JWT</strong>: <em>required (string)</em><p>JSON Web Token (<a href="https://jwt.io/">https://jwt.io/</a>). The token that identifies a valid user session. Get it by doing a POST to /session with valid credentials.</p></li></ul><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_holons__address_"><span class="parent">/holons</span>/{address}</a> <span class="methods"><a href="#holons__address__get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_holons__address_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#holons__address__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Get a holon via it&#39;s holonic id ("me.lucksus")</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="holons__address__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/holons</span>/{address}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Get a holon via it&#39;s holonic id ("me.lucksus")</p></div><ul class="nav nav-tabs"><li class="active"><a href="#holons__address__get_request" data-toggle="tab">Request</a></li><li><a href="#holons__address__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="holons__address__get_request"><h3>URI Parameters</h3><ul><li><strong>address</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="holons__address__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
-  "_name": "NoomapInterface",
-  "_global_path": "/home/lucksus/noomap_interface",
-  "_id": "Qx677asdfasdg4t",
-  "_holonic_id": "int.noomap"
-  "_lang": "qml",
-  "_qml": |
-    import QtQuick 2.4
-
-    Rectangle {
-        id: noomap_interface
-        color: &#39;black&#39;
-
-        property var holarchy
-        property var root_holon
-        property var focussed_holon
-
-        property var current_holons: []
-
-        Component.onCompleted: {
-            holarchy.loaded.connect(holarchyUpdate)
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_holons__hash_"><span class="parent">/holons</span>/{hash}</a> <span class="methods"><a href="#holons__hash__get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_holons__hash_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#holons__hash__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Get a holon via it&#39;s IPFS hash id</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="holons__hash__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/holons</span>/{hash}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Get a holon via it&#39;s IPFS hash id</p></div><ul class="nav nav-tabs"><li class="active"><a href="#holons__hash__get_request" data-toggle="tab">Request</a></li><li><a href="#holons__hash__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="holons__hash__get_request"><h3>URI Parameters</h3><ul><li><strong>hash</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="holons__hash__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "meta": {
+    "errors":[],
+    "validation":[]
+  },
+  "data": {
+    "hash": "Qmc6c2f19c50c13ff75c30a6199a627aaf38cfe6a38897ff22e09a77f842233ffd",
+    "data": {
+      "_holon_name": "lucksus",
+      "_holon_reated": "20160719_0413",
+      "_holon_precursor": "Qjao39dser3",
+      "_holon_nodes": {
+        "intention1": "Qmasdnlwsakdnt32",
+        "vision1": "Qmasdinwlijsa"
+      }
+      "_holon_edges": [
+        {
+          "type": "contains",
+          "destination": "/home/lucksus/intention1"
+        },
+        {
+          "type": "contains",
+          "destination": "/home/lucksus/vision1"
+        },
+        {
+          "type": "contains",
+          "destination": "/home/lucksus/vision1"
+        },
+        {
+          "type": "manifests",
+          "source": "/home/lucksus/intention1",
+          "destination": "/home/lucksus/vision1"
         }
-
-        function holarchyUpdate() {
-            noomap_interface.root_holon = holarchy.root_id
-            noomap_interface.focussed_holon = holarchy.root_id
-            createHolonDelegates()
-        }
-
-        function createHolonDelegates() {
-            var children = holarchy.getChildren( noomap_interface.focussed_holon )
-
-
-            var color_from_type = function(type) {
-                switch(type){
-                case &#39;v&#39;: return &#39;purple&#39;;
-                case &#39;i&#39;: return &#39;yellow&#39;;
-                case &#39;s&#39;: return &#39;orange&#39;;
-                case &#39;p&#39;: return &#39;green&#39;;
-                case &#39;d&#39;: return &#39;pink&#39;;
-
-                }
-            }
-
-            var component = Qt.createComponent(_holon.delegateSource);
-            //while(component.status !== Component.Ready) ;
-
-            clearHolons();
-
-            for(var i=0; i &lt; children.length; i++){
-                var holon = children[i];
-                var delegate = component.createObject(noomap_interface, {
-                  &#39;color&#39;: color_from_type( holon._t ),
-                  &#39;source&#39;: holon
-                });
-                current_holons.push( delegate );
-            }
-        }
-
-        function clearHolons() {
-            for(var i=0; i &lt; current_holons.length; i++){
-                current_holons[i].destroy();
-            }
-            current_holons = []
-        }
-
-      "delegateSource": |
-        import QtQuick 2.4
-
-        Rectangle {
-            id: holon
-            property double size: parent_size * source.s
-            property var source
-            property var parent_size: parent.height &lt; parent.width ? parent.height : parent.width
-            width: size
-            height: size
-            radius: size/2
-            color: &#39;red&#39;
-            border.color: &#39;white&#39;
-            border.width: 2
-
-            x: calc_screen_coord( source.x )
-            y: calc_screen_coord( source.y )
-
-            Text {
-                text: holon.source.t
-                color: &#39;white&#39;
-                anchors.centerIn: parent
-                scale: holon.size / 50
-                width: holon.size
-                height: holon.size
-                wrapMode: Text.Wrap
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                clip: true
-            }
-
-            function calc_screen_coord(logical_coord) {
-                return (holon.parent_size/2)*logical_coord + holon.parent_size/2 - size/2; // don&#39;t need -size/2 if anchor point is center
-            }
-
-        }
-
+      ]
     }
-
+  }
 }
-</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#session">/session</a></li><li><a href="#users">/users</a></li><li><a href="#ipfs">/ipfs</a></li><li><a href="#home">/home</a></li><li><a href="#holons">/holons</a></li></ul></div></div></div></div></body></html>
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="namespaces" class="panel-title">/namespaces</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_namespaces__homepath_"><span class="parent">/namespaces</span>/{homepath}</a> <span class="methods"><a href="#namespaces__homepath__get"><span class="badge badge_get">get</span></a> <a href="#namespaces__homepath__put"><span class="badge badge_put">put <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_namespaces__homepath_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#namespaces__homepath__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Get a holon via it&#39;s path name within the H4OME name space ("/home/lucksus/intention1")</p></div><div class="clearfix"></div></div><div onclick="window.location.href = '#namespaces__homepath__put'" class="list-group-item"><span class="badge badge_put">put <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>Sets/updates the H4OME name registrar for the given pathname if the logged in user has wright access to that path</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="namespaces__homepath__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/namespaces</span>/{homepath}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Get a holon via it&#39;s path name within the H4OME name space ("/home/lucksus/intention1")</p></div><ul class="nav nav-tabs"><li class="active"><a href="#namespaces__homepath__get_request" data-toggle="tab">Request</a></li><li><a href="#namespaces__homepath__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="namespaces__homepath__get_request"><h3>URI Parameters</h3><ul><li><strong>homepath</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="namespaces__homepath__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "meta": {
+    "errors":[],
+    "validation":[]
+  },
+  "data": {
+    "_holon_name": "Hello Holon",
+    "_active_holon_lang": "ES6",
+    "_active_holon_function": |
+      _holon.setTitle("Hello World!")
+  }
+}
+</code></pre></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="namespaces__homepath__put"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_put">put <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent">/namespaces</span>/{homepath}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Sets/updates the H4OME name registrar for the given pathname if the logged in user has wright access to that path</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>validUserSession</b><p>Some requests require authentication.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#namespaces__homepath__put_request" data-toggle="tab">Request</a></li><li><a href="#namespaces__homepath__put_response" data-toggle="tab">Response</a></li><li><a href="#namespaces__homepath__put_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="namespaces__homepath__put_request"><h3>URI Parameters</h3><ul><li><strong>homepath</strong>: <em>required (string)</em></li></ul><h3>Query Parameters</h3><ul><li><strong>path</strong>: <em>required (string)</em></li><li><strong>hash</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="namespaces__homepath__put_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "meta": {
+    "errors":[],
+    "validation":[]
+  },
+  "data": {
+    "path": "/home/hein23",
+    "hash": "asdfasdfasdfasdf"
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "meta": {
+    "errors":[
+      {
+        "message": "write not allowed"
+      }
+    ],
+    "validation":[]
+  }
+}
+</code></pre></div><div class="tab-pane" id="namespaces__homepath__put_securedby"><h1>Secured by validUserSession</h1><h3>Headers</h3><ul><li><strong>JWT</strong>: <em>required (string)</em><p>JSON Web Token (<a href="https://jwt.io/">https://jwt.io/</a>). The token that identifies a valid user session. Get it by doing a POST to /session with valid credentials.</p></li></ul><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#session">/session</a></li><li><a href="#users">/users</a></li><li><a href="#holons">/holons</a></li><li><a href="#namespaces">/namespaces</a></li></ul></div></div></div></div></body></html>
