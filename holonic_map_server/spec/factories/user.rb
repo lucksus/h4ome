@@ -5,5 +5,6 @@ FactoryGirl.define do
     email                   { Faker::Internet.email }
     password                passwd
     password_confirmation   passwd
+    home_hash               { Faker::Internet.hash }
   end
 end

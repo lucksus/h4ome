@@ -3,8 +3,7 @@ class API::V1::NamespacesController < API::V1::BaseController
   end
 
   def show
-    @path = params[:path].split('/')
-
+    path
     if @path[0] == 'home'
       user = User.find_by username: @path[1]
       @hash = user.home_hash if user
@@ -14,20 +13,31 @@ class API::V1::NamespacesController < API::V1::BaseController
   end
 
   def update
-    @path = params[:path].split('/')
-
+    path
     if @path[0] == 'home'
       user = User.find_by username: @path[1]
-      @found = true unless user.nil?
-      if @current_user && @current_user.id == user.id
-        user.home_hash = params[:hash]
-        user.save!
-        @hash = params[:hash]
-      else
-        render_error 'write not allowed', 401
+      unless user.nil? then
+        @found = true
+        if @current_user && @current_user.id == user.id
+          user.home_hash = params[:hash]
+          user.save!
+          @hash = params[:hash]
+        else
+          render_error 'write not allowed', 401
+        end
       end
     end
 
-    render_error 'namespace not found', 404 unless @found
+    unless @found then
+      render_error 'namespace not found', 404
+    end
+  end
+
+  protected
+
+  def path
+    path = params[:path]
+    path = path + "." + params[:format].to_s unless params[:format] == :json
+    @path = path.split('/')
   end
 end
