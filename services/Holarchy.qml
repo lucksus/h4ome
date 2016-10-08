@@ -35,10 +35,13 @@ Item {
             var link = links[i]
             if(link._ti === id) {
                 var holon = getHolonById(link._fi)
-                holon.x = link.x
-                holon.y = link.y
-                holon.s = link.s
-                children.push( holon )
+                if (holon)
+                {
+                    holon.x = link.x
+                    holon.y = link.y
+                    holon.s = link.s
+                    children.push( holon )
+                }
             }
         }
         return children;
