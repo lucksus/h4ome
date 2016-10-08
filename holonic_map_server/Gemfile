@@ -34,6 +34,13 @@ gem 'haml-rails'
 gem 'devise'
 gem 'jwt'
 
+gem 'rspec-rails',            '~> 3.5'
+gem 'shoulda-matchers',       '~> 2.7.0',   require: false
+gem 'json_spec',              '~> 1.1.4'
+gem 'factory_girl_rails'
+gem 'faker', '~> 1.4'
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
