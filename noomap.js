@@ -230,7 +230,7 @@ function updateScene()
 
         var group = new THREE.Group;
 
-
+/*
         var geometry2 = new THREE.SphereGeometry(0.9,32,24);
         var material2 = new THREE.MeshLambertMaterial({color: 0xff00ff, transparent: true, opacity: 0.8});
         var sphere2 = new THREE.Mesh(geometry2, material2);
@@ -241,7 +241,7 @@ function updateScene()
 
         group.add(sphere2);
 
-
+*/
 
 
         var radius = 500;
@@ -276,23 +276,47 @@ function updateScene()
 
             var material = new THREE.MeshLambertMaterial({color: style_from_type(h._t), transparent: true, opacity: 0.8});
             var sphere = new THREE.Mesh(geometry, material);
-
-           // sphere.renderOrder = 2;
+            sphere.renderOrder = 2;
             sphere.scale.set(radius*h.s, radius*h.s, radius*h.s);
-
-            console.log("created: ",radius*h.s, radius*h.s, radius*h.s)
-
             sphere.position.x = (radius) * h.x;
-
             sphere.position.z = (radius) * h.y;
 
+            group.add(sphere)
 
-            console.log("position:", sphere.position.x, sphere.position.y)
-            group.add(sphere);
+            // Add children of children
 
+
+            var grandchildren = current_holarchy.getChildren(h._id);
+
+            if (grandchildren.length > 0)
+            {
+                var holonGroup = new THREE.Group;
+
+
+                holonGroup.position.x = (radius) * h.x;
+                holonGroup.position.z = (radius) * h.y;
+                holonGroup.scale.set(radius*h.s,radius*h.s,radius*h.s);
+
+
+                for (var j=0; j<grandchildren.length; j++)
+                {
+                    var h2 = grandchildren[j];
+
+                    var material2 = new THREE.MeshLambertMaterial({color: style_from_type(h2._t), transparent: true, opacity: 0.8});
+                    var sphere2 = new THREE.Mesh(geometry, material2);
+                    //sphere2.renderOrder = 1;
+
+                    sphere2.scale.set(h2.s, h2.s, h2.s);
+                    sphere2.position.x = h2.x;
+                    sphere2.position.z = h2.y;
+
+                    holonGroup.add(sphere2)
+
+                }
+
+                group.add(holonGroup);
+            }
         }
-
-
 
 
         scene.add(group);
