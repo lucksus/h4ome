@@ -10,7 +10,10 @@ SOURCES += src/main.cpp \
 OTHER_FILES += h4ome.qml \
                 ui/*.qml \
                 services/*.qml \
-                js/*.js
+                js/*.js \
+                actions/*.js \
+                stores/*.qml
+
 
 RESOURCES += h4ome.qrc
 
@@ -40,3 +43,5 @@ QMAKE_MAC_SDK = macosx10.12
 
 HEADERS += \
     src/holonstorage.h
+
+include(vendor/vendor.pri)

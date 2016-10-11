@@ -10,6 +10,7 @@ import QtQuick.Controls.Styles 1.3
 import QtQuick.Dialogs 1.2
 import 'services/'
 import 'ui/'
+import 'stores/'
 
 ApplicationWindow {
     id: window
@@ -182,7 +183,7 @@ ApplicationWindow {
         // ... and display the result.
         console.log(holon);
 
-        var holon = h4omeFilesystem.getHolon("/home/terence/holon1");
+        var holon = PersistenceStore.holons//["/home/terence/holon1"];
         console.log(holon);
 
         var test_holon2 = {
