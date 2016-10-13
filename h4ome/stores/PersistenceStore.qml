@@ -120,6 +120,7 @@ AppListener {
                 }
                 meta.lastSynced = Date.new
                 meta.hash = newNamespaceHash
+                holonSaved(message.path)
             } else {
                 console.log('namespace not writable')
                 // TODO: call action
