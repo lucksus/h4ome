@@ -185,7 +185,7 @@ ApplicationWindow {
 
         PersistenceStore.initWithNamespace('/home/terence', hash_namespace)
         console.log('check PersistenceStore.initWithNamespace(): ',
-                    PersistenceStore.namespaces['/home/terence'] === hash_namespace
+                    PersistenceStore.namespaces['/home/terence'].hash === hash_namespace
                     );
         console.log('check PersistenceStore.holons empty: ',
                     JSON.stringify(PersistenceStore.holons) === JSON.stringify({})
