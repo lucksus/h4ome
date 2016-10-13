@@ -16,17 +16,19 @@ AppListener {
     signal holonSaved(string path)
 
 
-    property var holons: {
-        '/home/terence': {
-            hash: 'Qm7af8555652ef7bc54b3d25998c3cd6b648948b4a509f5242f58d586a89cf86ef',
-            data: {
-                _holon_title: "Terence McKenna's example namespace",
-                _holon_nodes: {
-                    "holon1": "Qm5aaf5c00fe1d97edb67d0e0c30496914ba49df11d2630863c695fa83761c367f"},
-                _holon_edges:{}
-            }
-        }
-    }
+    // {
+    //     '/home/terence': {
+    //         hash: 'Qm7af8555652ef7bc54b3d25998c3cd6b648948b4a509f5242f58d586a89cf86ef',
+    //         data: {
+    //             _holon_title: "Terence McKenna's example namespace",
+    //             _holon_nodes: {
+    //                 "holon1": "Qm5aaf5c00fe1d97edb67d0e0c30496914ba49df11d2630863c695fa83761c367f"},
+    //             _holon_edges:{}
+    //         }
+    //     }
+    // }
+
+    property var holons
 
     //! mapping of strings to meta objects
     //{
@@ -47,10 +49,7 @@ AppListener {
     //    }
     //}
 
-    property var namespaces: {
-        '/home/terence': 'Qm7af8555652ef7bc54b3d25998c3cd6b648948b4a509f5242f58d586a89cf86ef'
-    }
-
+    property var namespaces
 
     readonly property var _: Lodash._
 
@@ -60,7 +59,11 @@ AppListener {
         namespaces = JSON.parse(settings.namespaces_json)
     }
 
-
+    function initWithNamespace(namespace_name, namespace_hash) {
+        namespaces = { }
+        namespaces[namespace_name] = namespace_hash
+        holons = { }
+    }
 
 
     Filter {
@@ -86,7 +89,8 @@ AppListener {
             var holon_hash = namespace_holon._holon_nodes[relative_path]
             var loaded_holon = JSON.parse(HolonStorage.get_sync(holon_hash))
             holons[message.path] = {
-                data: loaded_holon
+                data: loaded_holon,
+                hash: holon_hash
             }
 
             holonAdded(message.path)
@@ -102,7 +106,10 @@ AppListener {
             var relative_path = message.path.substring(namespace.length + 1)
             var newNamespace = Holon.setNode(namespace_holon, relative_path, hash)
             var newNamespaceHash = HolonStorage.put(JSON.stringify(newNamespace))
-            holons[message.path] = message.holon
+            holons[message.path] = {
+                data: message.holon,
+                hash: hash
+            }
             namespaces[namespace] = newNamespaceHash
         }
     }

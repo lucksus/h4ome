@@ -12,12 +12,15 @@ import 'actions/'
 import 'services/'
 import 'ui/'
 import 'stores/'
+import 'js/lodash.js' as Lodash
 
 ApplicationWindow {
     id: window
     title: qsTr("H⁴OME")
     visible: true
     color: "black"
+
+    readonly property var _: Lodash._
 
     header: Rectangle {
             color: Qt.rgba(0,0,0,0.75)
@@ -174,26 +177,53 @@ ApplicationWindow {
             "_holon_edges":{}
         }
 
+        var holon1 = {"_holon_nodes":{"peter":"asdfasdswe23tASD24tFQ@#$TASDFASFAWETQ@#R"},"_holon_title":"Test Holon"}
+
         // We save the namespace_holon ...
-        var hash = HolonStorage.put(JSON.stringify(namespace_holon))
-        // ... and display it's hash value.
-        console.log(hash)
+        var hash_namespace = HolonStorage.put(JSON.stringify(namespace_holon))
+        /// and holon1
+        var hash_holon1 = HolonStorage.put(JSON.stringify(holon1))
+        // and check if the hash is correct
+        console.log('check HolonStorage hash: ',
+                    hash_holon1 === "Qm5aaf5c00fe1d97edb67d0e0c30496914ba49df11d2630863c695fa83761c367f"
+                    )
 
         // Now we try to get that same holon by providing the hash ...
-        var holon = HolonStorage.get_sync(hash);
-        // ... and display the result.
-        console.log(holon);
+        var holon = JSON.parse(HolonStorage.get_sync(hash_holon1));
+        // and check for equality
+        console.log('check HolonStorage.get: ',
+                    JSON.stringify(holon) === JSON.stringify(holon1)
+                    );
 
-        var holon = PersistenceStore.holons["/home/terence"];
-        console.log(JSON.stringify(holon));
 
-        var test_holon2 = {
+        PersistenceStore.initWithNamespace('/home/terence', hash_namespace)
+        console.log('check PersistenceStore.initWithNamespace(): ',
+                    PersistenceStore.namespaces['/home/terence'] === hash_namespace
+                    );
+        console.log('check PersistenceStore.holons empty: ',
+                    JSON.stringify(PersistenceStore.holons) === JSON.stringify({})
+                    );
+
+        PersistenceActions.loadHolon('/home/terence/holon1')
+        var loaded_holon1 = PersistenceStore.holons["/home/terence/holon1"].data
+        var loaded_hash = PersistenceStore.holons["/home/terence/holon1"].hash
+        console.log('check PersistenceAction.loadHolon: ',
+                    JSON.stringify(loaded_holon1) === JSON.stringify(holon1)
+                    )
+        console.log('check PersistenceAction.loadHolon hash: ',
+                    JSON.stringify(loaded_hash) === JSON.stringify(hash_holon1)
+                    )
+
+        var holon2 = {
             _holon_title: 'My intention'
         }
 
-        PersistenceActions.commitHolon("/home/terence/intention1", test_holon2)
-        holon = PersistenceStore.holons["/home/terence/intention1"]
-        console.log(JSON.stringify(holon))
+        PersistenceActions.commitHolon("/home/terence/intention1", holon2)
+        var loaded_holon2 = PersistenceStore.holons["/home/terence/intention1"].data
+        var loaded_hash2 = PersistenceStore.holons["/home/terence/intention1"].hash
+        console.log('check PersistenceAction.commitHolon: ',
+                    JSON.stringify(loaded_holon2) === JSON.stringify(holon2)
+                    )
 
 
     }
