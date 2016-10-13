@@ -11,7 +11,7 @@ OTHER_FILES += h4ome.qml \
                 ui/*.qml \
                 services/*.qml \
                 js/*.js \
-                actions/*.js \
+                actions/*.qml \
                 stores/*.qml
 
 
