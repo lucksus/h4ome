@@ -33,7 +33,8 @@ DISTFILES += \
     android/gradlew.bat \
     noomap.js \
     services/NamespaceController.qml \
-    seeds/*
+    seeds/* \
+    ui/HolonAnnotation.qml
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 QMAKE_MAC_SDK = macosx10.12

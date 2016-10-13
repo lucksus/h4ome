@@ -31,5 +31,6 @@
         <file>js/lodash.js</file>
         <file>services/NamespacesModel.qml</file>
         <file>js/Holon.js</file>
+        <file>ui/HolonAnnotation.qml</file>
     </qresource>
 </RCC>

@@ -13,6 +13,7 @@ var currentMatrix;
 
 var canvasWidth, canvasHeight;
 
+var mainGroup;
 
 function initializeGL(canvas, eventSource, window) {
 
@@ -230,6 +231,8 @@ function updateScene()
 
         var group = new THREE.Group;
 
+        mainGroup = group;
+
 /*
         var geometry2 = new THREE.SphereGeometry(0.9,32,24);
         var material2 = new THREE.MeshLambertMaterial({color: 0xff00ff, transparent: true, opacity: 0.8});
@@ -280,6 +283,8 @@ function updateScene()
             sphere.scale.set(radius*h.s, radius*h.s, radius*h.s);
             sphere.position.x = (radius) * h.x;
             sphere.position.z = (radius) * h.y;
+
+            sphere.holon = h;
 
             group.add(sphere)
 
@@ -480,9 +485,14 @@ function updateScene()
 
 var wTarget = new THREE.Vector3()
 
+var projector = new THREE.Projector();
+
+
 function paintGL(canvas) {
 
     var time = Date.now() * 0.00005;
+
+
 
     //camera.position.x += ( 1 - camera.position.x ) * 0.05;
    // camera.position.y += ( - 1 - camera.position.y ) * 0.05;
@@ -552,6 +562,51 @@ function paintGL(canvas) {
        // console.log(object.rotation.x)
 
     }
+
+
+    if (mainGroup)
+    {
+
+    //    var vector = new THREE.Vector3( mainGroup.children[6].position.x, mainGroup.children[6].position.y, mainGroup.children[6].position.z);
+
+
+  //      vector.applyMatrix4(mainGroup.children[6].matrixWorld);
+
+
+//        vector.applyMatrix4(mainGroup.matrixWorld);
+
+
+
+        // projector.projectVector( mainGroup.children[6].position.x  , camera );
+
+
+
+        var width = renderer.getSize().width , height = renderer.getSize().height;
+        var widthHalf = width / 2, heightHalf = height / 2;
+        var j = 0;
+
+        for (var i = 0; i < mainGroup.children.length; i++)
+        {
+            if (mainGroup.children[i] instanceof THREE.Mesh)
+            {
+                var vector = new THREE.Vector3();
+                vector.setFromMatrixPosition( mainGroup.children[i].matrixWorld);
+
+                vector.project(camera );
+
+                vector.x = ( vector.x * widthHalf ) + widthHalf;
+                vector.y = - ( vector.y * heightHalf ) + heightHalf;
+
+                updateTextAnnotations(j, vector.x, vector.y);
+
+                j++;
+            }
+        }
+
+
+    }
+
+    //console.log("it is", updateTextAnnotations)
 
     renderer.render( scene, camera );
 
