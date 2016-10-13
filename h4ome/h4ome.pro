@@ -35,7 +35,6 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat \
     noomap.js \
-    services/NamespaceController.qml \
     seeds/*
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
