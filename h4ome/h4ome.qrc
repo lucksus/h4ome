@@ -27,9 +27,7 @@
         <file>js/three.js</file>
         <file>noomap.js</file>
         <file>seeds/namespaces.js</file>
-        <file>services/NamespaceController.qml</file>
         <file>js/lodash.js</file>
-        <file>services/NamespacesModel.qml</file>
         <file>js/Holon.js</file>
         <file>stores/PersistenceStore.qml</file>
         <file>actions/qmldir</file>

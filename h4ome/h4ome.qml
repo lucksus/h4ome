@@ -155,20 +155,7 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-    NamespacesModel {
-        id: namespaces
-    }
-
-    NamespaceController {
-        id: h4omeFilesystem
-        namespaces: namespaces
-    }
-
     Component.onCompleted: {
-      //  holarchy.loadHolon('me.lucksus');
-
-        namespaces.init()
-
         // Initialize namespace holon:
         var namespace_holon = {
             "_holon_title": "Terence McKenna's example namespace",
