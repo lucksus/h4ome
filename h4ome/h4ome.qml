@@ -8,6 +8,7 @@ import Qt.labs.settings 1.0
 import QtQuick.Controls.Styles 1.3
 
 import QtQuick.Dialogs 1.2
+import 'actions/'
 import 'services/'
 import 'ui/'
 import 'stores/'
@@ -165,16 +166,16 @@ ApplicationWindow {
 
         namespaces.init()
 
-        // Test HolonStorage:
-        var test_holon = {
-            _holon_title: 'Test Holon',
-            _holon_nodes: {
-                'peter': 'asdfasdswe23tASD24tFQ@#$TASDFASFAWETQ@#R'
-            }
+        // Initialize namespace holon:
+        var namespace_holon = {
+            "_holon_title": "Terence McKenna's example namespace",
+            "_holon_nodes": {
+                "holon1": "Qm5aaf5c00fe1d97edb67d0e0c30496914ba49df11d2630863c695fa83761c367f"},
+            "_holon_edges":{}
         }
 
-        // We save a test holon ...
-        var hash = HolonStorage.put(JSON.stringify(test_holon))
+        // We save the namespace_holon ...
+        var hash = HolonStorage.put(JSON.stringify(namespace_holon))
         // ... and display it's hash value.
         console.log(hash)
 
@@ -183,16 +184,16 @@ ApplicationWindow {
         // ... and display the result.
         console.log(holon);
 
-        var holon = PersistenceStore.holons//["/home/terence/holon1"];
-        console.log(holon);
+        var holon = PersistenceStore.holons["/home/terence"];
+        console.log(JSON.stringify(holon));
 
         var test_holon2 = {
             _holon_title: 'My intention'
         }
 
-        h4omeFilesystem.saveHolon("/home/terence/intention1", test_holon2)
-        holon = h4omeFilesystem.getHolon("/home/terence/intention1")
-        console.log(holon)
+        PersistenceActions.commitHolon("/home/terence/intention1", test_holon2)
+        holon = PersistenceStore.holons["/home/terence/intention1"]
+        console.log(JSON.stringify(holon))
 
 
     }
