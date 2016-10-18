@@ -32,5 +32,6 @@
         <file>services/NamespacesModel.qml</file>
         <file>js/Holon.js</file>
         <file>ui/HolonAnnotation.qml</file>
+        <file>images/sprites/red_heart.png</file>
     </qresource>
 </RCC>

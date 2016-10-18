@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 import QtCanvas3D 1.0
+import QtSensors 5.0
+
 import "../noomap.js" as GLCode
 
 Canvas3D {
@@ -17,6 +19,7 @@ Canvas3D {
     property var exampleAnnotation
 
 
+    property real cameraPositionX: 1234
 
     Component.onCompleted: {
         holarchy.loaded.connect(holarchyUpdate)
@@ -36,6 +39,15 @@ Canvas3D {
     onPaintGL: {
         GLCode.paintGL(canvas3d);
         //fpsDisplay.fps = canvas3d.fps;
+
+
+
+
+// x: 0 to 90 --- 0 is flat .... 90 us profie
+        // -40 to 40  l r
+
+
+
     }
 
     onResizeGL: {
@@ -52,6 +64,10 @@ Canvas3D {
     {
         prepareHolonAnnotations();
         GLCode.holarchyUpdate(holarchy);
+
+
+        cameraZAnimation.restart();
+
     }
 
     function updateTextAnnotations(index, x, y)
@@ -60,7 +76,6 @@ Canvas3D {
         current_annotations[index].x = x - 50
         current_annotations[index].y = y -  50
 
-        console.log(index)
 
     }
 
@@ -69,7 +84,12 @@ Canvas3D {
 
     function prepareHolonAnnotations()
     {
+        // Get rid of any annotations from previous holon
+        for (var i=0; i<current_annotations.length; i++)
+            current_annotations[i].destroy();
         current_annotations = []
+
+
 
         if (holonAnnotationComponent.status == Component.Ready)
         {
@@ -100,5 +120,18 @@ Canvas3D {
         }
     }
 
+    NumberAnimation {
+        id: cameraZAnimation
+        target: canvas3d
+        properties: "cameraPositionX"
+        from: 1000
+        to: 1
+        easing.type: Easing.InOutQuint
+        duration: 3500
+    }
 
+    TiltSensor {
+        id: tiltSensor
+        active: true
+    }
 }

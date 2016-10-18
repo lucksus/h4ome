@@ -39,7 +39,7 @@ ApplicationWindow {
                     id: titleLabel
                     text: title
                     color: "white"
-                    font.pixelSize: 20
+                    font.pixelSize: 16
                     elide: Label.ElideRight
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter
