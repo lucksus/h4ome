@@ -1,3 +1,5 @@
+require "#{Rails.root}/lib/api/response/response_state.rb"
+
 module API
   module Response
     module ResponseHelper
