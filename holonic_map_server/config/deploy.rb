@@ -29,6 +29,7 @@ append :linked_files, 'holonic_map_server/config/database.yml', 'holonic_map_ser
 
 # Default value for linked_dirs is []
 # append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
+append :linked_dirs, 'holonic_map_server/holons'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -55,4 +56,4 @@ namespace :deploy do
    end
 end
 
-after 'deploy:restart', 'deploy:migrate'
+#after 'deploy:restart', 'deploy:migrate'
