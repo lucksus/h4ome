@@ -25,6 +25,7 @@ set :deploy_to, '/home/hms/production'
 
 # Default value for :linked_files is []
 # append :linked_files, 'config/database.yml', 'config/secrets.yml'
+append :linked_files, 'holonic_map_server/config/database.yml', 'holonic_map_server/config/secrets.yml'
 
 # Default value for linked_dirs is []
 # append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
@@ -34,3 +35,24 @@ set :deploy_to, '/home/hms/production'
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+
+set :rbenv_type, :user
+set :rbenv_ruby, '2.3.0'
+set :bundle_gemfile, -> { release_path.join('holonic_map_server/Gemfile') }
+
+after 'deploy:cleanup', 'deploy:restart'
+
+namespace :deploy do
+  desc "Migrating the database"
+  task :migrate do
+    on roles(:app) do
+      within "#{current_path}/holonic_map_server" do
+        with rails_env: "#{fetch(:stage)}" do
+          execute :rake, "db:migrate"
+        end
+      end
+    end
+   end
+end
+
+after 'deploy:restart', 'deploy:migrate'

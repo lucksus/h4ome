@@ -25,6 +25,8 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 gem 'capistrano-rails', group: :development
+gem 'capistrano-rbenv'
+gem 'capistrano-passenger'
 
 gem 'haml-rails'
 gem 'devise'
@@ -35,7 +37,8 @@ gem 'shoulda-matchers',       '~> 2.7.0',   require: false
 gem 'json_spec',              '~> 1.1.4'
 gem 'factory_girl_rails'
 gem 'faker', '~> 1.4'
-
+gem 'dotenv'
+gem 'pg'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -53,3 +56,4 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
