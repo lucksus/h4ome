@@ -35,6 +35,8 @@ int main(int argc, char *argv[])
     }
 
     QQmlApplicationEngine engine;
+    //engine.rootContext()->setContextProperty(QString("API_BASE_URL"), QString("https://h4ms.rosental10.de/api/v1/"));
+    engine.rootContext()->setContextProperty(QString("API_BASE_URL"), QString("http://localhost:3000/api/v1/"));
     engine.rootContext()->setContextProperty(QString("HolonStorage"), &holon_storage);
     engine.rootContext()->setContextProperty(QString("NAMESPACE_SEEDS"), namespace_seeds);
     engine.load(QUrl("qrc:/h4ome.qml"));

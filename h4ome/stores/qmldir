@@ -1,1 +1,2 @@
 singleton PersistenceStore 0.1 PersistenceStore.qml
+singleton UserStore 0.1 UserStore.qml

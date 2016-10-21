@@ -212,7 +212,18 @@ ApplicationWindow {
                     JSON.stringify(loaded_holon2) === JSON.stringify(holon2)
                     )
 
+        UserStore.isLoggedIn
+        //UserActions.signUp('nicolas@lucksus.eu', 'lucksus', 'blablub123*', 'blablub123*')
+        UserActions.login('nicolas@lucksus.eu', 'blablub123*')
 
+        UserStore.loggedOut.connect(function(){
+            console.log('logged out')
+            console.log(UserStore.jwt)
+        })
+        UserStore.loggedIn.connect(function(){
+            console.log(UserStore.jwt)
+            UserActions.logout()
+        })
     }
 
 }
