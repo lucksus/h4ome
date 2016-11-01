@@ -10,7 +10,10 @@ SOURCES += src/main.cpp \
 OTHER_FILES += h4ome.qml \
                 ui/*.qml \
                 services/*.qml \
-                js/*.js
+                js/*.js \
+                actions/*.qml \
+                stores/*.qml
+
 
 RESOURCES += h4ome.qrc
 
@@ -32,7 +35,6 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat \
     noomap.js \
-    services/NamespaceController.qml \
     seeds/*
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
@@ -40,3 +42,5 @@ QMAKE_MAC_SDK = macosx10.12
 
 HEADERS += \
     src/holonstorage.h
+
+include(vendor/vendor.pri)

@@ -27,9 +27,14 @@
         <file>js/three.js</file>
         <file>noomap.js</file>
         <file>seeds/namespaces.js</file>
-        <file>services/NamespaceController.qml</file>
         <file>js/lodash.js</file>
-        <file>services/NamespacesModel.qml</file>
         <file>js/Holon.js</file>
+        <file>stores/PersistenceStore.qml</file>
+        <file>actions/qmldir</file>
+        <file>actions/AppActions.qml</file>
+        <file>actions/PersistenceActions.qml</file>
+        <file>actions/PersistenceActionTypes.qml</file>
+        <file>actions/AppActionTypes.qml</file>
+        <file>stores/qmldir</file>
     </qresource>
 </RCC>
