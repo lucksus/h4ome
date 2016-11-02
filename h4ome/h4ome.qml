@@ -224,6 +224,9 @@ ApplicationWindow {
             console.log(UserStore.jwt)
             UserActions.logout()
         })
+        UserStore.error.connect(function(message){
+            console.log('error: ' + message)
+        })
     }
 
 }

@@ -20,10 +20,10 @@ AppListener {
     property bool logging_in: false
     property bool signing_up: false
 
-    signal loggedIn()
-    signal signedUp()
+    signal loggedIn(string email)
+    signal signedUp(string email)
     signal loggedOut()
-    signal error()
+    signal error(string message)
 
 
     Component.onCompleted: {
@@ -40,7 +40,7 @@ AppListener {
             })
 
             logging_in = true
-            HTTP.post(url, params, _private.handleLogin, _private.errorLogin)
+            HTTP.post(url, params, _private.handleLogin(message.email), _private.errorLogin(message.email))
         }
     }
 
@@ -55,7 +55,7 @@ AppListener {
                 password_confirmation: message.password_confirmation
             })
             signing_up = true
-            HTTP.post(url, params, _private.handleSignUp, _private.errorSignUp)
+            HTTP.post(url, params, _private.handleSignUp(message.email), _private.errorSignUp(message.email))
         }
     }
 
@@ -78,27 +78,35 @@ AppListener {
     QtObject {
         id: _private
 
-        function handleLogin(response) {
-            jwt = JSON.parse(response)['data']['jwt']
-            logging_in = false
-            isLoggedIn = true
-            loggedIn()
+        function handleLogin(email) {
+            return function(response) {
+                jwt = JSON.parse(response)['data']['jwt']
+                logging_in = false
+                isLoggedIn = true
+                loggedIn(email)
+            }
         }
 
-        function errorLogin(response, status) {
-            logging_in = false
-            isLoggedIn = false
-            error()
+        function errorLogin(login){
+            return function(response, status) {
+                logging_in = false
+                isLoggedIn = false
+                error('Login failed with "' + login + '"')
+            }
         }
 
-        function handleSignUp(response) {
-            signing_up = false
-            signedUp()
+        function handleSignUp(email){
+            return function(response) {
+                signing_up = false
+                signedUp(email)
+            }
         }
 
-        function errorSignUp(response, status) {
-            signing_up = true
-            error()
+        function errorSignUp(email) {
+            return function(response, status) {
+                signing_up = false
+                error('Sign up failed for "' + email + '" with: ' + response)
+            }
         }
     }
 }
