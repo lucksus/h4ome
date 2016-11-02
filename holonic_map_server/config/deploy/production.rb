@@ -60,9 +60,9 @@
 #     # password: 'please use keys'
 #   }
 
-server 'rosental10.de',
-       user: 'hms',
+server 'h4ms.h4ome.io',
+       user: 'h4ms',
        roles: %w{web app},
        ssh_options: {
-           port: 333
+           port: 3333
        }
