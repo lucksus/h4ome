@@ -40,5 +40,9 @@
         <file>action_types/UserActionTypes.qml</file>
         <file>action_types/AppActionTypes.qml</file>
         <file>action_types/PersistenceActionTypes.qml</file>
+        <file>ui/LoginView.qml</file>
+        <file>ui/BlueButton.qml</file>
+        <file>ui/Input.qml</file>
+        <file>h4ome-splash.png</file>
     </qresource>
 </RCC>

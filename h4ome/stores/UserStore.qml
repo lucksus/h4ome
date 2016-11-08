@@ -12,11 +12,13 @@ import '../js/lodash.js' as Lodash
 import 'qrc:/js/request.js' as HTTP
 
 AppListener {
+    id: store
 
     readonly property var _: Lodash._
 
     property bool isLoggedIn: false
     property string jwt
+    property string email
     property bool logging_in: false
     property bool signing_up: false
 
@@ -63,6 +65,7 @@ AppListener {
         type: UserActionTypes.logout
         onDispatched: {
             jwt = ''
+            isLoggedIn = false
             loggedOut()
         }
     }
@@ -83,6 +86,7 @@ AppListener {
                 jwt = JSON.parse(response)['data']['jwt']
                 logging_in = false
                 isLoggedIn = true
+                store.email = email
                 loggedIn(email)
             }
         }
