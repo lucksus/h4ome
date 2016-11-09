@@ -22,7 +22,13 @@ AppListener {
     property bool logging_in: false
     property bool signing_up: false
 
+    property string emailValiditionMessage
+    property string usernameValidationMessage
+    property string passwordValidationMessage
+    property string passwordConfirmationValidationMessage
+
     signal loggedIn(string email)
+    signal loginFailed()
     signal signedUp(string email)
     signal loggedOut()
     signal error(string message)
@@ -57,6 +63,10 @@ AppListener {
                 password_confirmation: message.password_confirmation
             })
             signing_up = true
+            emailValiditionMessage = ""
+            usernameValidationMessage = ""
+            passwordValidationMessage = ""
+            passwordConfirmationValidationMessage = ""
             HTTP.post(url, params, _private.handleSignUp(message.email), _private.errorSignUp(message.email))
         }
     }
@@ -95,7 +105,8 @@ AppListener {
             return function(response, status) {
                 logging_in = false
                 isLoggedIn = false
-                error('Login failed with "' + login + '"')
+                loginFailed()
+                error('Login failed with "' + login + '" with: ' + response + ' (status: ' + status + ')')
             }
         }
 
@@ -109,7 +120,30 @@ AppListener {
         function errorSignUp(email) {
             return function(response, status) {
                 signing_up = false
+
                 error('Sign up failed for "' + email + '" with: ' + response)
+
+                response = JSON.parse(response)
+                if(response["meta"] && response["meta"]["validation"]) {
+                    var validations = response["meta"]["validation"]
+                    _.forEach(validations, function(validation){
+                        var message = _.join(validation["messages"], ", ")
+                        switch(validation["field"]) {
+                        case "email":
+                            store.emailValiditionMessage = message
+                            break
+                        case "username":
+                            store.usernameValidationMessage = message
+                            break
+                        case "password":
+                            store.passwordValidationMessage = message
+                            break
+                        case "password_confirmation":
+                            store.passwordConfirmationValidationMessage = message
+                            break
+                        }
+                    })
+                }
             }
         }
     }

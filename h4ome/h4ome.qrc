@@ -44,5 +44,6 @@
         <file>ui/BlueButton.qml</file>
         <file>ui/Input.qml</file>
         <file>h4ome-splash.png</file>
+        <file>ui/TextButton.qml</file>
     </qresource>
 </RCC>

@@ -6,6 +6,8 @@ Rectangle {
     property alias text: input.text
     property alias placeholder: input.placeholderText
     property alias echoMode: input.echoMode
+    property string validationMessage
+    signal changed()
 
     width: Math.round(parent.width / 1.2)
 
@@ -22,7 +24,18 @@ Rectangle {
                 color: "transparent"
            }
         }
+        onEditingFinished: changed()
     }
+
+    Text {
+        id: validation
+        color: "red"
+        text: validationMessage
+        anchors.right: input.right
+        anchors.bottom: input.bottom
+        visible: validationMessage != ""
+    }
+
 
     Rectangle {
         anchors.top: input.bottom

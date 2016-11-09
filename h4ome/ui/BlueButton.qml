@@ -3,10 +3,12 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 
 Button {
+    id: blueButton
+    property string text
     style: ButtonStyle{
         label: Text{
             color: "white"
-            text: loginButton.text
+            text: blueButton.text
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             anchors.fill: parent
