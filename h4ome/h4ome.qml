@@ -20,6 +20,9 @@ ApplicationWindow {
     visible: true
     color: "black"
 
+    width: (Qt.platform.os == "linux" || Qt.platform.os == "osx" ) ? 334 : ""
+    height: (Qt.platform.os == "linux" || Qt.platform.os == "osx" ) ? 560 : ""
+
     readonly property var _: Lodash._
 
     header: Rectangle {
@@ -68,6 +71,12 @@ ApplicationWindow {
                         MenuItem {
                             text: qsTr("Load ~me.larky")
                             onTriggered: holarchy.loadHolon('me.larky')
+                        }
+                        MenuItem {
+                            id: menuLogout
+                            text: qsTr("Logout") + ' ' + UserStore.email
+                            onTriggered: UserActions.logout()
+                            enabled: UserStore.isLoggedIn
                         }
                         MenuItem {
                             text: qsTr("Exit")
@@ -148,11 +157,76 @@ ApplicationWindow {
         onLoaded: messageDialog.show(holarchy)
     }
 
-    //NoomapInterface {
-    Noomap3DInterface {
-        id: noomap_interface
-        holarchy: holarchy
+    Item {
+        id: root_widget
         anchors.fill: parent
+
+        state: UserStore.isLoggedIn ? "MAIN" : "LOGIN"
+
+        states: [
+            State {
+                name: "LOGIN"
+                PropertyChanges {
+                    target: loginView
+                    visible: true
+                }
+                PropertyChanges {
+                    target: noomap_interface
+                    visible: false
+                }
+            },
+            State {
+                name: "MAIN"
+                PropertyChanges {
+                    target: loginView
+                    opacity: 0
+                }
+                PropertyChanges {
+                    target: loginView
+                    y_shift: 3000
+                }
+                PropertyChanges {
+                    target: noomap_interface
+                    visible: true
+                }
+            }
+
+        ]
+
+        transitions: Transition {
+            NumberAnimation {
+                target: loginView
+                properties: "y_shift"
+                duration: 1000
+                easing.type: Easing.InSine
+            }
+            NumberAnimation {
+                target: loginView
+                properties: "opacity"
+                duration: 1500
+                easing.type: Easing.InSine
+            }
+        }
+
+        //NoomapInterface {
+        Noomap3DInterface {
+            id: noomap_interface
+            holarchy: holarchy
+            anchors.fill: parent
+            visible: false
+        }
+
+        LoginView {
+            id: loginView
+            anchors.fill: parent
+            visible: true
+            property int angle;
+            property int y_shift;
+            angle: 0
+            y_shift: 0
+            transform: Translate {y: loginView.y_shift}
+            z: 2
+        }
     }
 
     Component.onCompleted: {
@@ -212,7 +286,20 @@ ApplicationWindow {
                     JSON.stringify(loaded_holon2) === JSON.stringify(holon2)
                     )
 
+        UserStore.isLoggedIn
+        //UserActions.signUp('nicolas@lucksus.eu', 'lucksus', 'blablub123*', 'blablub123*')
+        //UserActions.login('nicolas@lucksus.eu', 'blablub123*')
 
+        UserStore.loggedOut.connect(function(){
+            console.log('logged out')
+            console.log(UserStore.jwt)
+        })
+        UserStore.loggedIn.connect(function(){
+            console.log(UserStore.jwt)
+        })
+        UserStore.error.connect(function(message){
+            console.log('error: ' + message)
+        })
     }
 
 }

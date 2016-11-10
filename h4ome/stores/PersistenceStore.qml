@@ -7,6 +7,7 @@ import QtQuick 2.0
 import QuickFlux 1.0
 import Qt.labs.settings 1.0
 import "../actions"
+import "../action_types"
 import '../js/lodash.js' as Lodash
 import '../js/Holon.js' as Holon
 
@@ -70,7 +71,6 @@ AppListener {
         }
         holons = { }
     }
-
 
     Filter {
         // Filter - Add a filter rule to AppListenr
@@ -153,6 +153,7 @@ AppListener {
 
     Settings {
         id: settings
+        category: "Persistence"
         property string namespaces_json
     }
 

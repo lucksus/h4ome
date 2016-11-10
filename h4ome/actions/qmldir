@@ -1,4 +1,4 @@
 singleton AppActions 0.1 AppActions.qml
-singleton AppActionTypes 0.1 AppActionTypes.qml
 singleton PersistenceActions 0.1 PersistenceActions.qml
-singleton PersistenceActionTypes 0.1 PersistenceActionTypes.qml
+singleton UserActions 0.1 UserActions.qml
+

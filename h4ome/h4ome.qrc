@@ -33,8 +33,17 @@
         <file>actions/qmldir</file>
         <file>actions/AppActions.qml</file>
         <file>actions/PersistenceActions.qml</file>
-        <file>actions/PersistenceActionTypes.qml</file>
-        <file>actions/AppActionTypes.qml</file>
         <file>stores/qmldir</file>
+        <file>actions/UserActions.qml</file>
+        <file>stores/UserStore.qml</file>
+        <file>action_types/qmldir</file>
+        <file>action_types/UserActionTypes.qml</file>
+        <file>action_types/AppActionTypes.qml</file>
+        <file>action_types/PersistenceActionTypes.qml</file>
+        <file>ui/LoginView.qml</file>
+        <file>ui/BlueButton.qml</file>
+        <file>ui/Input.qml</file>
+        <file>h4ome-splash.png</file>
+        <file>ui/TextButton.qml</file>
     </qresource>
 </RCC>
