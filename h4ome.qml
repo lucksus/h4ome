@@ -100,6 +100,7 @@ ApplicationWindow {
             model: ListModel {
                 ListElement { title: "/home/nico"; name: "me.lucksus" }
                 ListElement { title: "/home/chris"; name: "me.larky" }
+                ListElement { title: "/home/tan"; name: "me.tan" }
             }
 
             ScrollIndicator.vertical: ScrollIndicator { }

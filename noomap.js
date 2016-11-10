@@ -18,7 +18,7 @@ var mainGroup;
 var displacementZ = 0;
 
 
-var targetObject;
+var targetObject, targetHeight;
 var cameraTargetPosition;
 
 
@@ -179,10 +179,28 @@ function onDocumentMouseDown(x, y) {
 
                 targetObject = intersects[i].object;
 
+                targetHeight = 400;
+
+
+                //mainGroup.scale.x = 1.5;
+                //mainGroup.scale.y = 1.5;
+                //mainGroup.scale.z = 1.5;
+
+
+                //mainGroup.scale.x = 1 / intersects[i].object.holon.s ;
+                //mainGroup.scale.y = 1 / intersects[i].object.holon.s;
+                //mainGroup.scale.z = 1 / intersects[i].object.holon.s;
+
                 //cameraTargetPosition = intersects[i].object.position.clone();
 
                 break;
             }
+        }
+
+        if (intersects.length == 0)
+        {
+            targetHeight = 800;
+            targetObject = scene;
         }
     }
 
@@ -257,6 +275,13 @@ function holarchyUpdate(holarchy)
     focussed_holon = holarchy.root_id
 
     updateScene();
+
+    targetObject = scene;
+
+    targetHeight = 800;
+    camera.position.y = targetHeight;
+
+
 }
 
 function clearScene()
@@ -320,6 +345,8 @@ function updateScene()
             case 'p': return new THREE.Color("rgb(0,200,0)");
             case 'd': return new THREE.Color("rgb(255,153,255)");
             case 'f': return new THREE.Color("rgb(0,0,200)");
+            case 'r': return new THREE.Color("rgb(255,0,0)");
+
 
             case 'dna': return sprites.dna;
             case 'mp3': return sprites.mp3;
@@ -382,6 +409,8 @@ function updateScene()
 
             var geometry = new THREE.SphereGeometry(0.9,32,24);
 
+            var geometrylowres = new THREE.SphereGeometry(0.9,12,12);
+
             for (var k=0; k<hchildren.length; k++)
             {
                 var h = hchildren[k];
@@ -403,7 +432,7 @@ function updateScene()
 
                 var grandchildren = current_holarchy.getChildren(h._id);
 
-                if (false && grandchildren.length > 0)
+                if (grandchildren.length > 0)
                 {
                     var holonGroup = new THREE.Group;
 
@@ -413,20 +442,113 @@ function updateScene()
                     holonGroup.scale.set(radius*h.s,radius*h.s,radius*h.s);
 
 
-                    for (var j=0; j<grandchildren.length; j++)
+
+                    if (true)
                     {
-                        var h2 = grandchildren[j];
+                        var bgeom = new THREE.BufferGeometry();
+                        var positions = new Float32Array( grandchildren.length * 3 );
+                        var colors = new Float32Array( grandchildren.length * 3 );
 
-                        var material2 = new THREE.MeshLambertMaterial({color: style_from_type(h2._t), transparent: true, opacity: 0.8});
-                        var sphere2 = new THREE.Mesh(geometry, material2);
-                        //sphere2.renderOrder = 1;
+                        for ( var j = 0; j < grandchildren.length; j ++ ) {
 
-                        sphere2.scale.set(h2.s, h2.s, h2.s);
-                        sphere2.position.x = h2.x;
-                        sphere2.position.z = h2.y;
+                            var h2 = grandchildren[j];
+                            var i = j * 3;
 
-                        holonGroup.add(sphere2)
+                            positions[ i ]     = h2.x;
+                            positions[ i + 1 ] = 0;
+                            positions[ i + 2 ] = h2.y;
 
+                            var color = style_from_type( h2._t );
+
+                            console.log(h2.t, JSON.stringify(color))
+
+                            if (color instanceof THREE.Color)
+                            {
+                                colors[ i ]     = color.r;
+                                colors[ i + 1 ] = color.g;
+                                colors[ i + 2 ] = color.b;
+                            }
+                            else
+                            {
+                                colors[ i ]     = 1;
+                                colors[ i + 1 ] = 1;
+                                colors[ i + 2 ] = 1;
+                            }
+                        }
+
+                        bgeom.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+                        bgeom.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
+                        bgeom.computeBoundingSphere();
+
+                        var pmaterial = new THREE.PointsMaterial( { size: 50, map: sprites.ball, blending: THREE.AdditiveBlending, depthTest: false, transparent : true, vertexColors: THREE.VertexColors } );
+
+                        var points = new THREE.Points( bgeom, pmaterial );
+                        holonGroup.add( points );
+
+
+                        /*
+
+                        var pgeometry = new THREE.Geometry();
+
+                        for ( var j = 0; j < grandchildren.length; j ++ ) {
+
+                            var h2 = grandchildren[j];
+
+                            var vertex = new THREE.Vector3();
+                            vertex.x = h2.x;
+                            vertex.y = 0 //Math.random() * 2000*sf - 1000*sf;
+                            vertex.z = h2.y;
+
+                            //vertex.normalize()
+                            //vertex.multiplyScalar(radius) // * ((fi+1) / (sortedFrequencies.length+1)) )  //(parameters[i][3]/(max_total))
+
+                            pgeometry.vertices.push( vertex );
+
+                            //holonVertices[holons[fIndex[f][j]]._id] = vertex;
+
+                        }
+
+                        var pmaterial = new THREE.PointsMaterial( { size: def_size*2, blending: THREE.AdditiveBlending, depthTest: false, transparent : true } );
+
+                        var style = style_from_type( 'flake' );
+
+                        if (style instanceof THREE.Color)
+                        {
+                            pmaterial.color = style; //.setRGB( color[0], color[1], color[2] );
+                            pmaterial.map = sprites.ball;
+                        }
+                        else
+                        {
+                            pmaterial.map = style;
+                        }
+
+
+                        var particles = new THREE.Points( pgeometry, pmaterial );
+
+                        particles.scale.set(0.8,0.8,0.8);
+
+                        holonGroup.add( particles );
+
+                        */
+
+
+                    }
+                    else
+                    {
+                        for (var j=0; j<grandchildren.length; j++)
+                        {
+                            var h2 = grandchildren[j];
+
+                            var material2 = new THREE.MeshLambertMaterial({color: style_from_type(h2._t), transparent: true, opacity: 0.8});
+                            var sphere2 = new THREE.Mesh(geometry, material2);
+                            //sphere2.renderOrder = 1;
+
+                            sphere2.scale.set(h2.s, h2.s, h2.s);
+                            sphere2.position.x = h2.x;
+                            sphere2.position.z = h2.y;
+
+                            holonGroup.add(sphere2)
+                        }
                     }
 
                     group.add(holonGroup);
@@ -436,8 +558,8 @@ function updateScene()
                 // Extra bit (particles)
 
 
-                var sortedFrequencies = ['i','love'];
-                var fIndex = {'i': Math.random() * 5, 'love': Math.random() * 10};
+                var sortedFrequencies = ['flake','love'];
+                var fIndex = {'flake': Math.random() * 5, 'love': Math.random() * 10};
 
 
                 for (var fi = 0; fi < sortedFrequencies.length; fi++)
@@ -497,7 +619,6 @@ function updateScene()
 
                     group.add( particles );
 
-                    console.log("particle group",f, particles, h.t)
 
                 }
 
@@ -749,15 +870,25 @@ function paintGL(canvas) {
 
     if(targetObject)
     {
-        cameraTargetPosition.x += (targetObject.position.x - cameraTargetPosition.x) * 0.05;
-        cameraTargetPosition.y += (targetObject.position.y - cameraTargetPosition.y) * 0.05;
-        cameraTargetPosition.z += (targetObject.position.z - cameraTargetPosition.z) * 0.05;
+        var to = targetObject.position.clone();
+
+
+        to.applyMatrix4(mainGroup.matrixWorld);
+
+
+
+        cameraTargetPosition.x += (to.x - cameraTargetPosition.x) * 0.05;
+        cameraTargetPosition.y += (to.y - cameraTargetPosition.y) * 0.05;
+        cameraTargetPosition.z += (to.z - cameraTargetPosition.z) * 0.05;
     }
 
     camera.lookAt( cameraTargetPosition );
 
 
-
+    if (targetHeight)
+    {
+        camera.position.y += (targetHeight - camera.position.y) * 0.05;
+    }
 
 
     if (mainGroup)
