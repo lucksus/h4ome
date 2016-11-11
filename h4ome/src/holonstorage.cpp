@@ -114,6 +114,7 @@ void HolonStorage::request_finished(QNetworkReply *reply) {
         if(reply->error() == QNetworkReply::NoError) {
             write_file(hash, reply->readAll());
             m_last_sync[hash] = QDateTime::currentDateTime().toString();
+            emit holonDownloaded(hash);
         } else {
             std::cout << reply->error() << std::endl;
             std::cout << reply->readAll().toStdString() << std::endl;

@@ -43,6 +43,8 @@ signals:
     void progress_downChanged();
     void networkAccessibleChanged();
 
+    void holonDownloaded(QString hash);
+
 public slots:
     //! Gets holon contents for given IPFS hash.
     //! Wait still contents are available.
