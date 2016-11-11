@@ -238,6 +238,9 @@ ApplicationWindow {
             "_holon_edges":{}
         }
 
+        var load_hash = HolonStorage.hash(JSON.stringify(namespace_holon))
+        HolonStorage.get_sync(load_hash)
+
         var holon1 = {"_holon_nodes":{"peter":"asdfasdswe23tASD24tFQ@#$TASDFASFAWETQ@#R"},"_holon_title":"Test Holon"}
 
         // We save the namespace_holon ...
