@@ -90,16 +90,19 @@ AppListener {
         type: PersistenceActionTypes.loadHolon
         onDispatched: {
             var namespace = _private.findByPath(message.path)
-            var namespace_holon = JSON.parse(HolonStorage.get_sync(namespaces[namespace].hash))
-            var relative_path = message.path.substring(namespace.length + 1)
-            var holon_hash = namespace_holon._holon_nodes[relative_path]
-            var loaded_holon = JSON.parse(HolonStorage.get_sync(holon_hash))
-            holons[message.path] = {
-                data: loaded_holon,
-                hash: holon_hash
-            }
-
-            holonAdded(message.path)
+            HolonStorage.get(namespaces[namespace].hash).then(function(namespace_string) {
+                var namespace_holon = JSON.parse(namespace_string)
+                var relative_path = message.path.substring(namespace.length + 1)
+                var holon_hash = namespace_holon._holon_nodes[relative_path]
+                HolonStorage.get(holon_hash).then(function(holon_string) {
+                    var loaded_holon = JSON.parse(holon_string)
+                    holons[message.path] = {
+                        data: loaded_holon,
+                        hash: holon_hash
+                    }
+                    holonAdded(message.path)
+                });
+            });
         }
     }
 
@@ -110,17 +113,19 @@ AppListener {
             var namespace = _private.findByPath(message.path)
             var meta = namespaces[namespace]
             if(meta.writable){
-                var namespace_holon = JSON.parse(HolonStorage.get_sync(meta.hash))
-                var relative_path = message.path.substring(namespace.length + 1)
-                var newNamespace = Holon.setNode(namespace_holon, relative_path, hash)
-                var newNamespaceHash = HolonStorage.put(JSON.stringify(newNamespace))
-                holons[message.path] = {
-                    data: message.holon,
-                    hash: hash
-                }
-                meta.lastSynced = Date.new
-                meta.hash = newNamespaceHash
-                holonSaved(message.path)
+                HolonStorage.get(meta.hash).then(function(namespace_string){
+                    var namespace_holon = JSON.parse(namespace_string)
+                    var relative_path = message.path.substring(namespace.length + 1)
+                    var newNamespace = Holon.setNode(namespace_holon, relative_path, hash)
+                    var newNamespaceHash = HolonStorage.put(JSON.stringify(newNamespace))
+                    holons[message.path] = {
+                        data: message.holon,
+                        hash: hash
+                    }
+                    meta.lastSynced = Date.new
+                    meta.hash = newNamespaceHash
+                    holonSaved(message.path)
+                });
             } else {
                 console.log('namespace not writable')
                 // TODO: call action

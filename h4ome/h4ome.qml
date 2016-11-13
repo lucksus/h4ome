@@ -1,12 +1,9 @@
 import QtQuick 2.6
 import QtQuick 2.0
-
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
-
 import QtQuick.Controls.Styles 1.3
-
 import QtQuick.Dialogs 1.2
 import 'actions/'
 import 'services/'
@@ -239,7 +236,10 @@ ApplicationWindow {
         }
 
         var load_hash = HolonStorage.hash(JSON.stringify(namespace_holon))
-        HolonStorage.get_sync(load_hash)
+        var promise = HolonStorage.get(load_hash)
+        promise.then(function(string) {
+            console.log('got namespace holon via promise: ' + string)
+        });
 
         var holon1 = {"_holon_nodes":{"peter":"asdfasdswe23tASD24tFQ@#$TASDFASFAWETQ@#R"},"_holon_title":"Test Holon"}
 
@@ -253,12 +253,13 @@ ApplicationWindow {
                     )
 
         // Now we try to get that same holon by providing the hash ...
-        var holon = JSON.parse(HolonStorage.get_sync(hash_holon1));
-        // and check for equality
-        console.log('check HolonStorage.get: ',
-                    JSON.stringify(holon) === JSON.stringify(holon1)
-                    );
-
+        HolonStorage.get(hash_holon1).then(function(holon1_string){
+            var holon = JSON.parse(holon1_string);
+            // and check for equality
+            console.log('check HolonStorage.get: ',
+                        JSON.stringify(holon) === JSON.stringify(holon1)
+                        );
+        });
 
         PersistenceStore.initWithNamespace('/home/terence', hash_namespace)
         console.log('check PersistenceStore.initWithNamespace(): ',
@@ -268,28 +269,38 @@ ApplicationWindow {
                     JSON.stringify(PersistenceStore.holons) === JSON.stringify({})
                     );
 
+        PersistenceStore.holonAdded.connect(function(path) {
+            if(path == '/home/terence/holon1') {
+                var loaded_holon1 = PersistenceStore.holons[path].data
+                var loaded_hash = PersistenceStore.holons[path].hash
+                console.log('check PersistenceAction.loadHolon: ',
+                            JSON.stringify(loaded_holon1) === JSON.stringify(holon1)
+                            )
+                console.log('check PersistenceAction.loadHolon hash: ',
+                            JSON.stringify(loaded_hash) === JSON.stringify(hash_holon1)
+                            )
+            }
+        });
         PersistenceActions.loadHolon('/home/terence/holon1')
-        var loaded_holon1 = PersistenceStore.holons["/home/terence/holon1"].data
-        var loaded_hash = PersistenceStore.holons["/home/terence/holon1"].hash
-        console.log('check PersistenceAction.loadHolon: ',
-                    JSON.stringify(loaded_holon1) === JSON.stringify(holon1)
-                    )
-        console.log('check PersistenceAction.loadHolon hash: ',
-                    JSON.stringify(loaded_hash) === JSON.stringify(hash_holon1)
-                    )
+
+
 
         var holon2 = {
             _holon_title: 'My intention'
         }
 
         PersistenceActions.commitHolon("/home/terence/intention1", holon2)
-        var loaded_holon2 = PersistenceStore.holons["/home/terence/intention1"].data
-        var loaded_hash2 = PersistenceStore.holons["/home/terence/intention1"].hash
-        console.log('check PersistenceAction.commitHolon: ',
-                    JSON.stringify(loaded_holon2) === JSON.stringify(holon2)
-                    )
+        PersistenceStore.holonSaved.connect(function(path) {
+            if(path == '/home/terence/intention1') {
+                var loaded_holon2 = PersistenceStore.holons["/home/terence/intention1"].data
+                var loaded_hash2 = PersistenceStore.holons["/home/terence/intention1"].hash
+                console.log('check PersistenceAction.commitHolon: ',
+                            JSON.stringify(loaded_holon2) === JSON.stringify(holon2)
+                            )
+            }
+        })
 
-        UserStore.isLoggedIn
+        //UserStore.isLoggedIn
         //UserActions.signUp('nicolas@lucksus.eu', 'lucksus', 'blablub123*', 'blablub123*')
         //UserActions.login('nicolas@lucksus.eu', 'blablub123*')
 

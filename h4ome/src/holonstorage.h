@@ -5,6 +5,7 @@
 #include <QFuture>
 #include <QNetworkAccessManager>
 #include <QHash>
+#include "Promise.h"
 
 //! HolonStorage handles all the things for you.
 //! Just put in a holon (which returns its address==hash)
@@ -36,6 +37,18 @@ public:
     bool networkAccessible() const;
     void setNetworkAccessible(bool);
 
+    //! Gets holon contents for given IPFS hash.
+    //! Returns a promise that will resolve with the holon's content as a string
+    Q_INVOKABLE QObject* get(QString hash);
+
+    //! Saves holon
+    //! Returns its hash (=address)
+    Q_INVOKABLE QString put(QString holon);
+
+    //! Calculcate the given holon's IPFS hash
+    Q_INVOKABLE QString hash(QString holon) const;
+
+
 signals:
     void uploadingChanged();
     void downloadingChanged();
@@ -44,22 +57,6 @@ signals:
     void networkAccessibleChanged();
 
     void holonDownloaded(QString hash);
-
-public slots:
-    //! Gets holon contents for given IPFS hash.
-    //! Wait still contents are available.
-    QString get_sync(QString hash);
-
-    //! Gets holon contents for given IPFS hash.
-    //! Returns immediately and return future object.
-    //QFuture get(QString hash) const;
-
-    //! Saves holon
-    //! Returns its hash (=address)
-    QString put(QString holon);
-
-    //! Calculcate the given holon's IPFS hash
-    QString hash(QString holon) const;
 
 private:
     QString m_root_path;

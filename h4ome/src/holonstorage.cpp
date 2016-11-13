@@ -7,6 +7,7 @@
 #include <QNetworkReply>
 #include <QDateTime>
 #include <iostream>
+#include <QQmlEngine>
 #include "api_constants.h"
 
 HolonStorage::HolonStorage(QString root_path) :
@@ -45,16 +46,17 @@ bool HolonStorage::networkAccessible() const{
 }
 void HolonStorage::setNetworkAccessible(bool){}
 
-QString HolonStorage::get_sync(QString _hash) {
+QObject* HolonStorage::get(QString _hash) {
     QFile data(file_path(_hash));
-    QString holon;
+    Promise* promise = new Promise();
     if (data.open(QFile::ReadOnly) ) {
         QTextStream in (&data);
-        holon = in.readAll();
+        QString holon = in.readAll();
+        promise->resolve(holon);
     } else {
         download(_hash);
     }
-    return holon;
+    return promise;
 }
 
 QString HolonStorage::put(QString holon) {
