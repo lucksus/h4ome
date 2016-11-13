@@ -5,7 +5,8 @@
 #include <QFuture>
 #include <QNetworkAccessManager>
 #include <QHash>
-#include "Promise.h"
+
+class Promise;
 
 //! HolonStorage handles all the things for you.
 //! Just put in a holon (which returns its address==hash)
@@ -66,9 +67,10 @@ private:
     QHash<QString, QNetworkReply*> m_downloads;
     QHash<QString, QString> m_last_sync;
     QHash<QNetworkReply*, QString> m_hash;
+    QHash<QString, Promise*> m_download_promises;
 
     void sync(QString holon);
-    void download(QString hash);
+    void download(QString hash, Promise* promise);
 
     bool isUploading(QString hash) const;
     bool isDownloading(QString hash) const;
@@ -77,7 +79,8 @@ private:
     void write_file(QString filename, QString holon);
 
 private slots:
-    void request_finished(QNetworkReply*);
+    void handleFinishedDownload();
+    void handleFinishedUpload();
 };
 
 //qmlRegisterType<HolonStorage>("com.h4ome.holon_storage", 0, 1, "HolonStorage");

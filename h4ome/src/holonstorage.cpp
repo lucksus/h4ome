@@ -8,14 +8,16 @@
 #include <QDateTime>
 #include <iostream>
 #include <QQmlEngine>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include "api_constants.h"
+#include "Promise.h"
 
 HolonStorage::HolonStorage(QString root_path) :
     QObject(0), m_root_path(root_path), m_network_manager(this)
 {
     QDir dir;
     dir.mkpath(root_path);
-    connect(&m_network_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(request_finished(QNetworkReply*)));
 }
 
 bool HolonStorage::uploading() const {
@@ -54,7 +56,7 @@ QObject* HolonStorage::get(QString _hash) {
         QString holon = in.readAll();
         promise->resolve(holon);
     } else {
-        download(_hash);
+        download(_hash, promise);
     }
     return promise;
 }
@@ -84,17 +86,22 @@ void HolonStorage::sync(QString holon){
     if(isUploading(_hash)) return;
     QString url = QString("%1/holons").arg(API_BASE_URL);
     QString payload = QString("data=%1").arg(holon);
-    QNetworkReply* reply = m_network_manager.post(QNetworkRequest(QUrl(url)), payload.toUtf8());
+    QNetworkRequest request = QNetworkRequest(QUrl(url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkReply* reply = m_network_manager.post(request, payload.toUtf8());
+    connect(reply, SIGNAL(finished()), this, SLOT(handleFinishedUpload()));
     m_uploads[_hash] = reply;
     m_hash[reply] = _hash;
 }
 
-void HolonStorage::download(QString hash){
+void HolonStorage::download(QString hash, Promise* promise){
     QString url = QString("%1/holons/%2").arg(API_BASE_URL).arg(hash);
     if(isDownloading(hash)) return;
     QNetworkReply* reply = m_network_manager.get(QNetworkRequest(QUrl(url)));
+    connect(reply, SIGNAL(finished()), this, SLOT(handleFinishedDownload()));
     m_downloads[hash] = reply;
     m_hash[reply] = hash;
+    m_download_promises[hash] = promise;
 }
 
 bool HolonStorage::isUploading(QString hash) const {
@@ -109,20 +116,39 @@ bool HolonStorage::isSynced(QString hash) const {
     return m_last_sync[hash].contains(hash);
 }
 
-void HolonStorage::request_finished(QNetworkReply *reply) {
+void HolonStorage::handleFinishedDownload() {
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
     QString hash = m_hash[reply];
     if(m_downloads.contains(hash)) {
         m_downloads.remove(hash);
         if(reply->error() == QNetworkReply::NoError) {
-            write_file(hash, reply->readAll());
-            m_last_sync[hash] = QDateTime::currentDateTime().toString();
-            emit holonDownloaded(hash);
+            QByteArray raw_api_response = reply->readAll();
+            QJsonObject api_response = QJsonDocument::fromJson(raw_api_response).object();
+            QJsonObject data = api_response.value("data").toObject();
+            if(data.value("hash").toString() == hash) {
+                QString holon_string = data.value("data").toString();
+                write_file(hash, holon_string);
+                m_last_sync[hash] = QDateTime::currentDateTime().toString();
+                emit holonDownloaded(hash);
+                m_download_promises[hash]->resolve(holon_string);
+                m_download_promises.remove(hash);
+            } else {
+                std::cout << "WTF?!" << std::endl;
+            }
+
         } else {
             std::cout << reply->error() << std::endl;
             std::cout << reply->readAll().toStdString() << std::endl;
         }
-
+    } else {
+        std::cout << "WTF?!" << std::endl;
     }
+    reply->deleteLater();
+}
+
+void HolonStorage::handleFinishedUpload() {
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
+    QString hash = m_hash[reply];
     if(m_uploads.contains(hash)) {
         m_uploads.remove(hash);
         if(reply->error() == QNetworkReply::NoError) {
@@ -131,6 +157,8 @@ void HolonStorage::request_finished(QNetworkReply *reply) {
             std::cout << reply->error() << std::endl;
             std::cout << reply->readAll().toStdString() << std::endl;
         }
+    } else {
+        std::cout << "WTF?!" << std::endl;
     }
     reply->deleteLater();
 }
