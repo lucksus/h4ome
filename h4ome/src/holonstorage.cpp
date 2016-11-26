@@ -10,6 +10,7 @@
 #include <QQmlEngine>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QDataStream>
 #include "api_constants.h"
 #include "Promise.h"
 
@@ -18,6 +19,7 @@ HolonStorage::HolonStorage(QString root_path) :
 {
     QDir dir;
     dir.mkpath(root_path);
+    loadSyncTable();
 }
 
 bool HolonStorage::uploading() const {
@@ -131,7 +133,7 @@ bool HolonStorage::isDownloading(QString hash) const {
 }
 
 bool HolonStorage::isSynced(QString hash) const {
-    return m_last_sync[hash].contains(hash);
+    return m_last_sync.contains(hash);
 }
 
 void HolonStorage::handleFinishedDownload() {
@@ -173,6 +175,7 @@ void HolonStorage::handleFinishedUpload() {
         if(m_uploads.size() == 0) emit(uploadingChanged());
         if(reply->error() == QNetworkReply::NoError) {
             m_last_sync[hash] = QDateTime::currentDateTime().toString();
+            writeSyncTable();
         } else {
             std::cout << reply->error() << std::endl;
             std::cout << reply->readAll().toStdString() << std::endl;
@@ -203,4 +206,28 @@ void HolonStorage::transferProgress(qint64 bytesReceived, qint64 bytesTotal) {
         emit(progress_downChanged());
     }
 
+}
+
+
+void HolonStorage::writeSyncTable() {
+    QFile fileOut("sync-table.dat");
+    if (fileOut.open(QIODevice::WriteOnly))
+    {
+       QDataStream out(&fileOut);
+       out.setVersion(QDataStream::Qt_4_6);
+       out << m_last_sync;
+       fileOut.flush();
+       fileOut.close();
+    }
+}
+
+void HolonStorage::loadSyncTable() {
+    QFile fileIn("sync-table.dat");
+    if (fileIn.open(QIODevice::ReadOnly))
+    {
+        QDataStream in(&fileIn);
+        in.setVersion(QDataStream::Qt_4_6);
+        in >> m_last_sync;
+        fileIn.close();
+    }
 }

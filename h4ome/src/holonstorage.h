@@ -84,6 +84,8 @@ private slots:
     void handleFinishedDownload();
     void handleFinishedUpload();
     void transferProgress(qint64 bytesReceived, qint64 bytesTotal);
+    void writeSyncTable();
+    void loadSyncTable();
 };
 
 //qmlRegisterType<HolonStorage>("com.h4ome.holon_storage", 0, 1, "HolonStorage");
