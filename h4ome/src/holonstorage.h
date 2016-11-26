@@ -5,6 +5,7 @@
 #include <QFuture>
 #include <QNetworkAccessManager>
 #include <QHash>
+#include <QTimer>
 
 class Promise;
 
@@ -71,6 +72,8 @@ private:
     QHash<QNetworkReply*, qint64> m_bytes_transfered;
     QHash<QNetworkReply*, qint64> m_bytes_total;
 
+    QTimer m_sync_timer;
+
     void upload(QString holon);
     void download(QString hash, Promise* promise);
 
@@ -86,6 +89,7 @@ private slots:
     void transferProgress(qint64 bytesReceived, qint64 bytesTotal);
     void writeSyncTable();
     void loadSyncTable();
+    void startUploadOfUnsyncedHolons();
 };
 
 //qmlRegisterType<HolonStorage>("com.h4ome.holon_storage", 0, 1, "HolonStorage");

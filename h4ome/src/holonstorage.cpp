@@ -10,6 +10,7 @@
 #include <QQmlEngine>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QSet>
 #include <QDataStream>
 #include "api_constants.h"
 #include "Promise.h"
@@ -20,6 +21,8 @@ HolonStorage::HolonStorage(QString root_path) :
     QDir dir;
     dir.mkpath(root_path);
     loadSyncTable();
+    connect(&m_sync_timer, SIGNAL(timeout()), this, SLOT(startUploadOfUnsyncedHolons()));
+    m_sync_timer.start(15000);
 }
 
 bool HolonStorage::uploading() const {
@@ -56,7 +59,8 @@ double HolonStorage::progress_down() const{
 void HolonStorage::setProgress_down(double) {}
 
 bool HolonStorage::networkAccessible() const{
-    return m_network_manager.networkAccessible() == QNetworkAccessManager::Accessible;
+    QNetworkAccessManager::NetworkAccessibility accessibility = m_network_manager.networkAccessible();
+    return accessibility == QNetworkAccessManager::Accessible;
 }
 void HolonStorage::setNetworkAccessible(bool){}
 
@@ -229,5 +233,21 @@ void HolonStorage::loadSyncTable() {
         in.setVersion(QDataStream::Qt_4_6);
         in >> m_last_sync;
         fileIn.close();
+    }
+}
+
+void HolonStorage::startUploadOfUnsyncedHolons() {
+    if(!networkAccessible()) return;
+    QDir holon_storage(m_root_path);
+    QSet<QString> in_files(QSet<QString>::fromList(holon_storage.entryList()));
+    QSet<QString> synced(QSet<QString>::fromList(m_last_sync.keys()));
+    in_files.subtract(synced);
+    foreach(QString hash, in_files) {
+        QFile data(file_path(hash));
+        if (data.open(QFile::ReadOnly) ) {
+            QTextStream in (&data);
+            QString holon = in.readAll();
+            upload(holon);
+        }
     }
 }
