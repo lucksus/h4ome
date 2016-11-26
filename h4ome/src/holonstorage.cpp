@@ -32,19 +32,29 @@ bool HolonStorage::downloading() const{
 void HolonStorage::setDownloading(bool) {}
 
 double HolonStorage::progress_up() const{
-    foreach(const QString &hash, m_uploads.keys()) {
-        //m_uploads[hash]->
+    qint64 bytes_total = 0;
+    qint64 bytes_uploaded = 0;
+    foreach(QNetworkReply* reply, m_uploads.values()) {
+        bytes_total += m_bytes_total[reply];
+        bytes_uploaded += m_bytes_transfered[reply];
     }
+    return static_cast<double>(bytes_uploaded) / static_cast<double>(bytes_total);
 }
 void HolonStorage::setProgress_up(double) {}
 
 double HolonStorage::progress_down() const{
-
+    qint64 bytes_total = 0;
+    qint64 bytes_downloaded = 0;
+    foreach(QNetworkReply* reply, m_downloads.values()) {
+        bytes_total += m_bytes_total[reply];
+        bytes_downloaded += m_bytes_transfered[reply];
+    }
+    return static_cast<double>(bytes_downloaded) / static_cast<double>(bytes_total);
 }
 void HolonStorage::setProgress_down(double) {}
 
 bool HolonStorage::networkAccessible() const{
-
+    return m_network_manager.networkAccessible() == QNetworkAccessManager::Accessible;
 }
 void HolonStorage::setNetworkAccessible(bool){}
 
@@ -84,24 +94,32 @@ void HolonStorage::sync(QString holon){
     QString _hash = hash(holon);
     if(isSynced(_hash)) return;
     if(isUploading(_hash)) return;
+    if(m_uploads.size() == 0) emit(uploadingChanged());
     QString url = QString("%1/holons").arg(API_BASE_URL);
     QString payload = QString("data=%1").arg(holon);
     QNetworkRequest request = QNetworkRequest(QUrl(url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QNetworkReply* reply = m_network_manager.post(request, payload.toUtf8());
-    connect(reply, SIGNAL(finished()), this, SLOT(handleFinishedUpload()));
     m_uploads[_hash] = reply;
     m_hash[reply] = _hash;
+    connect(reply, SIGNAL(finished()), this, SLOT(handleFinishedUpload()));
+    connect(reply, SIGNAL(uploadProgress(qint64,qint64)), this, SLOT(transferProgress(qint64,qint64)));
+    emit(uploadingChanged());
+    emit(progress_upChanged());
 }
 
 void HolonStorage::download(QString hash, Promise* promise){
     QString url = QString("%1/holons/%2").arg(API_BASE_URL).arg(hash);
     if(isDownloading(hash)) return;
+    if(m_downloads.size() == 0) emit(downloadingChanged());
     QNetworkReply* reply = m_network_manager.get(QNetworkRequest(QUrl(url)));
-    connect(reply, SIGNAL(finished()), this, SLOT(handleFinishedDownload()));
     m_downloads[hash] = reply;
     m_hash[reply] = hash;
     m_download_promises[hash] = promise;
+    connect(reply, SIGNAL(finished()), this, SLOT(handleFinishedDownload()));
+    connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(transferProgress(qint64,qint64)));
+    emit(downloadingChanged());
+    emit(progress_downChanged());
 }
 
 bool HolonStorage::isUploading(QString hash) const {
@@ -121,6 +139,7 @@ void HolonStorage::handleFinishedDownload() {
     QString hash = m_hash[reply];
     if(m_downloads.contains(hash)) {
         m_downloads.remove(hash);
+        if(m_downloads.size() == 0) emit(downloadingChanged());
         if(reply->error() == QNetworkReply::NoError) {
             QByteArray raw_api_response = reply->readAll();
             QJsonObject api_response = QJsonDocument::fromJson(raw_api_response).object();
@@ -151,6 +170,7 @@ void HolonStorage::handleFinishedUpload() {
     QString hash = m_hash[reply];
     if(m_uploads.contains(hash)) {
         m_uploads.remove(hash);
+        if(m_uploads.size() == 0) emit(uploadingChanged());
         if(reply->error() == QNetworkReply::NoError) {
             m_last_sync[hash] = QDateTime::currentDateTime().toString();
         } else {
@@ -169,4 +189,18 @@ void HolonStorage::write_file(QString filename, QString holon) {
         QTextStream out(&data);
         out << holon;
     }
+}
+
+void HolonStorage::transferProgress(qint64 bytesReceived, qint64 bytesTotal) {
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
+
+    m_bytes_transfered[reply] = bytesReceived;
+    m_bytes_total[reply] = bytesTotal;
+
+    if(m_uploads.values().contains(reply)) {
+        emit(progress_upChanged());
+    } else {
+        emit(progress_downChanged());
+    }
+
 }

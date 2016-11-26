@@ -68,6 +68,8 @@ private:
     QHash<QString, QString> m_last_sync;
     QHash<QNetworkReply*, QString> m_hash;
     QHash<QString, Promise*> m_download_promises;
+    QHash<QNetworkReply*, qint64> m_bytes_transfered;
+    QHash<QNetworkReply*, qint64> m_bytes_total;
 
     void sync(QString holon);
     void download(QString hash, Promise* promise);
@@ -81,6 +83,7 @@ private:
 private slots:
     void handleFinishedDownload();
     void handleFinishedUpload();
+    void transferProgress(qint64 bytesReceived, qint64 bytesTotal);
 };
 
 //qmlRegisterType<HolonStorage>("com.h4ome.holon_storage", 0, 1, "HolonStorage");

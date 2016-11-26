@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
-
+    QQuickStyle::setStyle("Material");
     QSettings settings;
     QString style = QQuickStyle::name();
     if (!style.isEmpty())

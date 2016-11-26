@@ -224,6 +224,47 @@ ApplicationWindow {
             transform: Translate {y: loginView.y_shift}
             z: 2
         }
+
+        Label {
+            id: downloadingLabel
+            text: 'Downloading:'
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            color: "white"
+            visible: HolonStorage.downloading
+            z: 10
+        }
+
+        ProgressBar {
+            id: downloadingProgressBar
+            anchors.bottom: parent.bottom
+            anchors.left: downloadingLabel.right
+            anchors.right: parent.right
+            value: HolonStorage.progress_down
+            visible: HolonStorage.downloading
+            z: 10
+        }
+
+        Label {
+            id: uploadingLabel
+            text: 'Uploading:'
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.bottomMargin: HolonStorage.downloading ? downloadingLabel.height : 0
+            color: "white"
+            visible: HolonStorage.uploading
+            z: 10
+        }
+
+        ProgressBar {
+            anchors.bottom: parent.bottom
+            anchors.left: downloadingLabel.right
+            anchors.right: parent.right
+            anchors.bottomMargin: HolonStorage.downloading ? downloadingLabel.height : 0
+            value: HolonStorage.progress_up
+            visible: HolonStorage.uploading
+            z: 10
+        }
     }
 
     Component.onCompleted: {
