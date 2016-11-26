@@ -76,7 +76,7 @@ QObject* HolonStorage::get(QString _hash) {
 QString HolonStorage::put(QString holon) {
     QString holon_hash = hash(holon);
     write_file(holon_hash, holon);
-    sync(holon);
+    upload(holon);
     return hash(holon);
 }
 
@@ -92,7 +92,7 @@ QString HolonStorage::file_path(QString holon_hash) const {
     return QString("%1/%2").arg(m_root_path).arg(holon_hash);
 }
 
-void HolonStorage::sync(QString holon){
+void HolonStorage::upload(QString holon){
     QString _hash = hash(holon);
     if(isSynced(_hash)) return;
     if(isUploading(_hash)) return;

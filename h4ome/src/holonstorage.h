@@ -71,7 +71,7 @@ private:
     QHash<QNetworkReply*, qint64> m_bytes_transfered;
     QHash<QNetworkReply*, qint64> m_bytes_total;
 
-    void sync(QString holon);
+    void upload(QString holon);
     void download(QString hash, Promise* promise);
 
     bool isUploading(QString hash) const;
