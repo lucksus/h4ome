@@ -5,7 +5,8 @@ QT += qml quick quickcontrols2
 INSTALLS += target
 
 SOURCES += src/main.cpp \
-    src/holonstorage.cpp
+    src/holonstorage.cpp \
+    src/Promise.cpp
 
 OTHER_FILES += h4ome.qml \
                 ui/*.qml \
@@ -42,6 +43,8 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 QMAKE_MAC_SDK = macosx10.12
 
 HEADERS += \
-    src/holonstorage.h
+    src/holonstorage.h \
+    src/api_constants.h \
+    src/Promise.h
 
 include(vendor/vendor.pri)

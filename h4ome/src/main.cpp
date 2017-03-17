@@ -7,6 +7,8 @@
 #include <QSettings>
 #include <QFile>
 #include "holonstorage.h"
+#include "api_constants.h"
+#include "Promise.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,7 +18,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
-
+    QQuickStyle::setStyle("Material");
     QSettings settings;
     QString style = QQuickStyle::name();
     if (!style.isEmpty())
@@ -35,10 +37,11 @@ int main(int argc, char *argv[])
     }
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty(QString("API_BASE_URL"), QString("https://h4ms.h4ome.io/api/v1/"));
-    //engine.rootContext()->setContextProperty(QString("API_BASE_URL"), QString("http://localhost:3000/api/v1/"));
+    engine.rootContext()->setContextProperty(QString("API_BASE_URL"), API_BASE_URL);
     engine.rootContext()->setContextProperty(QString("HolonStorage"), &holon_storage);
     engine.rootContext()->setContextProperty(QString("NAMESPACE_SEEDS"), namespace_seeds);
+    Promise::setEngine(&engine);
+    qRegisterMetaType<Promise>();
     engine.load(QUrl("qrc:/h4ome.qml"));
     if (engine.rootObjects().isEmpty())
         return -1;
