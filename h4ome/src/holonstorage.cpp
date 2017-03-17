@@ -181,8 +181,10 @@ void HolonStorage::handleFinishedUpload() {
             m_last_sync[hash] = QDateTime::currentDateTime().toString();
             writeSyncTable();
         } else {
+            std::cout << "HolonStorage: upload failed with error code: ";
             std::cout << reply->error() << std::endl;
-            std::cout << reply->readAll().toStdString() << std::endl;
+            std::cout << "When trying to talk to " << API_BASE_URL << std::endl;
+            std::cout << "See http://doc.qt.io/qt-5/qnetworkreply.html#NetworkError-enum for a description of all error codes." << std::endl;
         }
     } else {
         std::cout << "WTF?!" << std::endl;
