@@ -3,10 +3,9 @@ TEMPLATE = app
 QT += qml quick quickcontrols2
 
 INSTALLS += target
-
+LIBS += ../h4ome_core/libh4ome_core.a
+INCLUDEPATH += ../h4ome_core/src
 SOURCES += src/main.cpp \
-    src/holonstorage.cpp \
-    src/Promise.cpp
 
 OTHER_FILES += h4ome.qml \
                 ui/*.qml \
@@ -42,9 +41,7 @@ DISTFILES += \
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 QMAKE_MAC_SDK = macosx10.12
 
-HEADERS += \
-    src/holonstorage.h \
-    src/api_constants.h \
-    src/Promise.h
+HEADERS +=
+
 
 include(vendor/vendor.pri)

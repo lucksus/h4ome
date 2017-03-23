@@ -7,7 +7,6 @@
 #include <QNetworkReply>
 #include <QDateTime>
 #include <iostream>
-#include <QQmlEngine>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QSet>
