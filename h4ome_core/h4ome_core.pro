@@ -6,7 +6,8 @@ SOURCES += src/holonstorage.cpp \
     src/holonruntime.cpp \
     src/environment.cpp \
     src/mutableholon.cpp \
-    src/Promise.cpp
+    src/Promise.cpp \
+    src/h4mssessionmanager.cpp
 
 
 
@@ -20,4 +21,5 @@ HEADERS += \
     src/holonruntime.h \
     src/environment.h \
     src/mutableholon.h \
-    src/Promise.h
+    src/Promise.h \
+    src/h4mssessionmanager.h
