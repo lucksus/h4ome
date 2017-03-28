@@ -13,6 +13,9 @@ public:
     virtual void loadHolon(QString path) = 0;
     virtual void commitHolon(QString path, Holon* holon) = 0;
 
+signals:
+    void holonLoaded(QString path);
+
 };
 
 

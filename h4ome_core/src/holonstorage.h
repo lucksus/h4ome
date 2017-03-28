@@ -6,6 +6,7 @@
 #include <QNetworkAccessManager>
 #include <QHash>
 #include <QTimer>
+#include <future>
 
 class Promise;
 
@@ -41,7 +42,7 @@ public:
 
     //! Gets holon contents for given IPFS hash.
     //! Returns a promise that will resolve with the holon's content as a string
-    Q_INVOKABLE QObject* get(QString hash);
+    std::future<QString> get(QString hash);
 
     //! Saves holon
     //! Returns its hash (=address)
@@ -60,6 +61,9 @@ signals:
 
     void holonDownloaded(QString hash);
 
+    void triggerDownload(QString hash, std::promise<QString>* promise);
+    void triggerUpload(QString holon);
+
 private:
     QString m_root_path;
     QString file_path(QString holon) const;
@@ -68,14 +72,11 @@ private:
     QHash<QString, QNetworkReply*> m_downloads;
     QHash<QString, QString> m_last_sync;
     QHash<QNetworkReply*, QString> m_hash;
-    QHash<QString, Promise*> m_download_promises;
+    QHash<QString, std::promise<QString>*> m_download_promises;
     QHash<QNetworkReply*, qint64> m_bytes_transfered;
     QHash<QNetworkReply*, qint64> m_bytes_total;
 
     QTimer m_sync_timer;
-
-    void upload(QString holon);
-    void download(QString hash, Promise* promise);
 
     bool isUploading(QString hash) const;
     bool isDownloading(QString hash) const;
@@ -84,6 +85,9 @@ private:
     void write_file(QString filename, QString holon);
 
 private slots:
+    void upload(QString holon);
+    void download(QString hash, std::promise<QString>* promise);
+
     void handleFinishedDownload();
     void handleFinishedUpload();
     void transferProgress(qint64 bytesReceived, qint64 bytesTotal);

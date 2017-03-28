@@ -1,13 +1,16 @@
 TEMPLATE = lib
 CONFIG += staticlib
-QT += network qml
+QT += network qml concurrent
 
 SOURCES += src/holonstorage.cpp \
     src/holonruntime.cpp \
     src/environment.cpp \
     src/mutableholon.cpp \
     src/Promise.cpp \
-    src/h4mssessionmanager.cpp
+    src/h4mssessionmanager.cpp \
+    src/h4mspersistenceprovider.cpp \
+    src/holon.cpp \
+    src/h4msnamespaceconnector.cpp
 
 
 
@@ -22,4 +25,6 @@ HEADERS += \
     src/environment.h \
     src/mutableholon.h \
     src/Promise.h \
-    src/h4mssessionmanager.h
+    src/h4mssessionmanager.h \
+    src/h4mspersistenceprovider.h \
+    src/h4msnamespaceconnector.h

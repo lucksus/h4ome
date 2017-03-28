@@ -50,6 +50,11 @@ int main(int argc, char *argv[])
             QCoreApplication::translate("main", "Show more (debugging) output"));
     parser.addOption(verboseOption);
 
+    QCommandLineOption initFileOption(QStringList() << "f" << "initialise-with-file",
+            QCoreApplication::translate("main", "Initialises the namespace with the given file which will be uploaded and it's hash registered for the given namespace"),
+            QCoreApplication::translate("main", "namespace holon file"));
+    parser.addOption(initFileOption);
+
     // Process the actual command line arguments given by the user
     parser.process(app);
 
@@ -68,6 +73,12 @@ int main(int argc, char *argv[])
     QObject::connect(&H4msSessionManager::getInstance(), &H4msSessionManager::error, &Controller::getInstance(), &Controller::logInError);
     H4msSessionManager::getInstance().login(username, password);
 
+    Controller::getInstance().setRootPath(h4ome_namespace);
+
+    if(parser.isSet(initFileOption)){
+        QString initFile = parser.value(initFileOption);
+        Controller::getInstance().setInitFile(initFile);
+    }
 
     return app.exec();
 

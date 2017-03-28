@@ -13,6 +13,7 @@
 #include <QDataStream>
 #include "api_constants.h"
 #include "Promise.h"
+#include <future>
 
 HolonStorage::HolonStorage(QString root_path) :
     QObject(0), m_root_path(root_path), m_network_manager(this)
@@ -21,6 +22,8 @@ HolonStorage::HolonStorage(QString root_path) :
     dir.mkpath(root_path);
     loadSyncTable();
     connect(&m_sync_timer, SIGNAL(timeout()), this, SLOT(startUploadOfUnsyncedHolons()));
+    connect(this, &HolonStorage::triggerDownload, this, &HolonStorage::download);
+    connect(this, &HolonStorage::triggerUpload, this, &HolonStorage::upload);
     m_sync_timer.start(15000);
 }
 
@@ -63,23 +66,24 @@ bool HolonStorage::networkAccessible() const{
 }
 void HolonStorage::setNetworkAccessible(bool){}
 
-QObject* HolonStorage::get(QString _hash) {
+std::future<QString> HolonStorage::get(QString _hash) {
     QFile data(file_path(_hash));
-    Promise* promise = new Promise();
+    //Promise* promise = new Promise();
+    std::promise<QString>* promise = new std::promise<QString>;
     if (data.open(QFile::ReadOnly) ) {
         QTextStream in (&data);
         QString holon = in.readAll();
-        promise->resolve(holon);
+        promise->set_value(holon);
     } else {
-        download(_hash, promise);
+        triggerDownload(_hash, promise);
     }
-    return promise;
+    return promise->get_future();
 }
 
 QString HolonStorage::put(QString holon) {
     QString holon_hash = hash(holon);
     write_file(holon_hash, holon);
-    upload(holon);
+    triggerUpload(holon);
     return hash(holon);
 }
 
@@ -113,7 +117,7 @@ void HolonStorage::upload(QString holon){
     emit(progress_upChanged());
 }
 
-void HolonStorage::download(QString hash, Promise* promise){
+void HolonStorage::download(QString hash, std::promise<QString>* promise){
     QString url = QString("%1/holons/%2").arg(API_BASE_URL).arg(hash);
     if(isDownloading(hash)) return;
     if(m_downloads.size() == 0) emit(downloadingChanged());
@@ -154,7 +158,7 @@ void HolonStorage::handleFinishedDownload() {
                 write_file(hash, holon_string);
                 m_last_sync[hash] = QDateTime::currentDateTime().toString();
                 emit holonDownloaded(hash);
-                m_download_promises[hash]->resolve(holon_string);
+                m_download_promises[hash]->set_value(holon_string);
                 m_download_promises.remove(hash);
             } else {
                 std::cout << "WTF?!" << std::endl;
