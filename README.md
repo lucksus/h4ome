@@ -1,7 +1,7 @@
 # H4OME
 ## H4OME Holistic Holonic Holographic Object Meta Environment
 
-As sequel to [Noomap](http://noomap.info),
+As sequel to [Noomap](https://larcombe.io/projects/noomap/),
 H4OME aims at being a new approach to how we do The Web
 and cybersphere technology in general by combining holonic data representation
 with blockchain technology, smart contracts, decentralized file storage,
@@ -48,3 +48,7 @@ in a shell.
 For the Holonic Map Server you need [Ruby on Rails >=5.0](http://rubyonrails.org/) (which needs [Ruby >=2.2](https://github.com/rbenv/rbenv)).
 
 __See also READMEs in subdirectories__
+
+## Credits
+
+Vision and code co-authored by Nicolas Luck and Chris Larcombe, 2017.
